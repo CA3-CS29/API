@@ -1,0 +1,61 @@
+variables:
+  APP_NAME: ca3-api
+
+stages:
+  - test
+  - build
+  - deploy
+
+Test-Backend:
+  stage: test
+  image: gradle:jdk11
+  tags:
+    - docker
+  only:
+    - merge_requests
+  script:
+    - echo "Testing Backend... 🏓"
+    - ./gradlew test build
+    - echo "Backend Tests Complete! 🎉"
+
+Build-Backend:
+  stage: build
+  image: gradle:jdk11
+  tags:
+    - docker
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+  script:
+    - echo "Building Backend... 🛠"
+    - ./gradlew assemble
+    - echo "Backend Build Complete! 🎉"
+  artifacts:
+    paths:
+      - build/libs/api-1.jar
+    expire_in: 1 week
+  only:
+    - master
+
+Deploy-Backend-to-Heroku:
+  stage: deploy
+  image: docker:latest
+  tags:
+    - docker
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay
+  only:
+    - master
+  script:
+    - echo "Building API... 🛠"
+    - ./gradlew assemble
+    - echo "Gradle assembled 👍"
+    - docker login -u _ -p $HEROKU_API_KEY registry.heroku.com
+    - docker build -f Dockerfile --iidfile imageid.txt -t registry.heroku.com/$APP_NAME/web .
+    - echo "Pushing to docker registry 🐳"
+    - docker push registry.heroku.com/$APP_NAME/web
+    - echo "Docker Image ID is $(cat imageid.txt)"
+    - echo "Deploying changes to heroku 🥁"
+    - docker run --rm -e HEROKU_API_KEY=$HEROKU_API_KEY wingrunr21/alpine-heroku-cli container:release web --app ca3-api
+    - echo "We are live 🎉"
