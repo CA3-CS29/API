@@ -20,8 +20,19 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    // Mongodb
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    // Lombok
+    implementation 'org.projectlombok:lombok:1.18.12'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    // JUnit
+    testImplementation 'junit:junit:4.12'
+
+    // Test lombok annotations
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
