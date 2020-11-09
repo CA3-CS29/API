@@ -29,7 +29,7 @@ public class Region {
 
     @JsonProperty("user_id")
     @NonNull
-    private String user_id;
+    private List<String> user_id;
 
     @JsonProperty("name")
     private String name;
