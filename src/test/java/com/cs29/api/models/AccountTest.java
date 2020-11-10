@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AccountTest {
     private final ObjectMapper MAPPER = new ObjectMapper();
     private final String TEST_ID = "TEST_ID";
-    private final String TEST_NAME = "TEST_NAME";
     private final int TEST_NUM_PORTFOLIOS = 0;
     private final Account TEST_ACCOUNT = Account
             .builder()
