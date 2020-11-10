@@ -1,4 +1,4 @@
-package com.cs29.api.models;
+package com.cs29.api.dtos;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -9,12 +9,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RegionTest {
+public class RegionDtoTest {
     private final ObjectMapper MAPPER = new ObjectMapper();
     private final List<String> TEST_ID = Arrays.asList("TEST_ID1", "TEST_ID2");
     private final String TEST_NAME = "TEST_NAME";
     private final int TEST_NUM_OFFICES = 0;
-    private final Region TEST_REGION = Region
+    private final RegionDto TEST_REGION_DTO = RegionDto
             .builder()
             .regionId(TEST_NAME)
             .portfolioId(TEST_NAME)
@@ -24,20 +24,19 @@ public class RegionTest {
             .offices(null)
             .build();
     private final String TEST_SERIALIZED_REGION = "{\"region_id\":\"TEST_NAME\",\"portfolio_id\":\"TEST_NAME\"," +
-            "\"user_id\":[\"TEST_ID1\",\"TEST_ID2\"],\"name\":\"TEST_NAME\",\"num_offices\":0,\"offices\":null}";
+            "\"user_id\":[\"TEST_ID1\",\"TEST_ID2\"],\"name\":\"TEST_NAME\",\"num_offices\":0}";
 
     @SneakyThrows
     @Test
-    public void givenRegionSerializationSucceeds() {
-        String serializedRegion = MAPPER.writeValueAsString(TEST_REGION);
+    public void givenRegionDtoSerializationSucceeds() {
+        String serializedRegion = MAPPER.writeValueAsString(TEST_REGION_DTO);
         assertEquals(serializedRegion, TEST_SERIALIZED_REGION);
     }
 
     @SneakyThrows
     @Test
-    public void givenRegionJsonDeserializeSucceeds() {
-        Region region = MAPPER.readValue(TEST_SERIALIZED_REGION, Region.class);
-        assertEquals(region, TEST_REGION);
+    public void givenRegionDtoJsonDeserializeSucceeds() {
+        RegionDto regionDto = MAPPER.readValue(TEST_SERIALIZED_REGION, RegionDto.class);
+        assertEquals(regionDto, TEST_REGION_DTO);
     }
-
 }

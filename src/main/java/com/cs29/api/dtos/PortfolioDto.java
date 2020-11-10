@@ -1,5 +1,8 @@
-package com.cs29.api.models;
+package com.cs29.api.dtos;
 
+import com.cs29.api.models.Region;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
@@ -7,17 +10,16 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Data
 @Builder
-@Document(collection = "portfolios")
 @Accessors(chain = true)
-@JsonDeserialize(builder = Portfolio.PortfolioBuilder.class)
-public class Portfolio {
-
+@JsonDeserialize(builder = PortfolioDto.PortfolioDtoBuilder.class)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PortfolioDto {
     @Id
     @JsonProperty("portfolio_id")
     @NonNull
