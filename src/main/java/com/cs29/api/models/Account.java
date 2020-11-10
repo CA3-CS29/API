@@ -21,10 +21,10 @@ public class Account {
     @Id
     @JsonProperty("user_id")
     @NonNull
-    private String user_id;
+    private String userId;
 
     @JsonProperty("num_portfolios")
-    private int num_portfolios;
+    private int numPortfolios;
 
     @JsonProperty("portfolios")
     private List<Portfolio> portfolios;

@@ -20,22 +20,22 @@ public class Office {
     @Id
     @JsonProperty("office_id")
     @NonNull
-    private String office_id;
+    private String officeId;
 
     @JsonProperty("user_id")
     @NonNull
-    private List<String> user_id;
+    private List<String> userId;
 
     @JsonProperty("region_id")
     @NonNull
-    private String region_id;
+    private String regionId;
 
     @JsonProperty("name")
     @NonNull
     private String name;
 
     @JsonProperty("num_entries")
-    private int num_entries;
+    private int numEntries;
 
     @JsonProperty("entries")
     private List<Entry> entries;

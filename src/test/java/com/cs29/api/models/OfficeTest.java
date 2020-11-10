@@ -16,11 +16,11 @@ public class OfficeTest {
     private final int TEST_NUM_ENTRIES = 0;
     private final Office TEST_OFFICE = Office
             .builder()
-            .office_id(TEST_NAME)
-            .region_id(TEST_NAME)
-            .user_id(TEST_ID)
+            .officeId(TEST_NAME)
+            .regionId(TEST_NAME)
+            .userId(TEST_ID)
             .name(TEST_NAME)
-            .num_entries(TEST_NUM_ENTRIES)
+            .numEntries(TEST_NUM_ENTRIES)
             .entries(null)
             .build();
     private final String TEST_SERIALIZED_OFFICE = "{\"office_id\":\"TEST_NAME\",\"user_id\":[\"TEST_ID1\",\"TEST_ID2\"]," +

@@ -13,8 +13,8 @@ public class AccountTest {
     private final int TEST_NUM_PORTFOLIOS = 0;
     private final Account TEST_ACCOUNT = Account
             .builder()
-            .user_id(TEST_ID)
-            .num_portfolios(TEST_NUM_PORTFOLIOS)
+            .userId(TEST_ID)
+            .numPortfolios(TEST_NUM_PORTFOLIOS)
             .portfolios(null)
             .build();
     private final String TEST_SERIALIZED_ACCOUNT = "{\"user_id\":\"TEST_ID\",\"num_portfolios\":0,\"portfolios\":null}";

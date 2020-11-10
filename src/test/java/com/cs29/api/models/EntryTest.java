@@ -16,8 +16,8 @@ public class EntryTest {
     private final String TEST_LEVEL = "test_level";
     private final String TEST_FURTHER_INFO = "test_further_info";
     private final Entry TEST_ENTRY = Entry.builder()
-            .entry_id(TEST_ID)
-            .office_id(TEST_ID)
+            .entryId(TEST_ID)
+            .officeId(TEST_ID)
             .tag(TEST_TAG)
             .consumption(TEST_DOUBLE)
             .original(TEST_DOUBLE)
@@ -28,7 +28,7 @@ public class EntryTest {
             .level2(TEST_LEVEL)
             .level3(TEST_LEVEL)
             .level4(TEST_LEVEL)
-            .further_info(TEST_FURTHER_INFO)
+            .furtherInfo(TEST_FURTHER_INFO)
             .components(null)
             .build();
     private final String TEST_SERIALIZED_ENTRY = "{\"entry_id\":\"test_id\",\"office_id\":\"test_id\",\"tag\":" +
