@@ -17,13 +17,13 @@ public class PortfolioTest {
     private final String TEST_DATE = "10/10/2020";
     private final Portfolio TEST_PORTFOLIO = Portfolio
             .builder()
-            .portfolio_id(TEST_NAME)
-            .user_id(TEST_ID)
+            .portfolioId(TEST_NAME)
+            .userId(TEST_ID)
             .tag(TEST_NAME)
             .regions(null)
-            .num_regions(TEST_NUM_REGIONS)
-            .created_on(TEST_DATE)
-            .updated_on(TEST_DATE)
+            .numRegions(TEST_NUM_REGIONS)
+            .createdOn(TEST_DATE)
+            .updatedOn(TEST_DATE)
             .build();
     private final String TEST_SERIALIZED_PORTFOLIO = "{\"portfolio_id\":\"TEST_NAME\",\"user_id\":[\"TEST_ID1\",\"TEST_ID2\"]," +
             "\"tag\":\"TEST_NAME\",\"num_regions\":0,\"regions\":null,\"created_on\":\"10/10/2020\"," +

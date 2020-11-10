@@ -21,26 +21,26 @@ public class Portfolio {
     @Id
     @JsonProperty("portfolio_id")
     @NonNull
-    private String portfolio_id;
+    private String portfolioId;
 
     @JsonProperty("user_id")
     @NonNull
-    private List<String> user_id;
+    private List<String> userId;
 
     @JsonProperty("tag")
     private String tag;
 
     @JsonProperty("num_regions")
-    private int num_regions;
+    private int numRegions;
 
     @JsonProperty("regions")
     private List<Region> regions;
 
     @JsonProperty("created_on")
     @NonNull
-    private String created_on;
+    private String createdOn;
 
     @JsonProperty("updated_on")
     @NonNull
-    private String updated_on;
+    private String updatedOn;
 }

@@ -20,11 +20,11 @@ public class Entry {
     @Id
     @JsonProperty("entry_id")
     @NonNull
-    private String entry_id;
+    private String entryId;
 
     @JsonProperty("office_id")
     @NonNull
-    private String office_id;
+    private String officeId;
 
     @JsonProperty("tag")
     @NonNull
@@ -60,7 +60,7 @@ public class Entry {
     private String level4;
 
     @JsonProperty("further_info")
-    private String further_info;
+    private String furtherInfo;
 
     @JsonProperty("percentage")
     private double percentage;

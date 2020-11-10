@@ -16,10 +16,10 @@ public class RegionTest {
     private final int TEST_NUM_OFFICES = 0;
     private final Region TEST_REGION = Region
             .builder()
-            .region_id(TEST_NAME)
-            .portfolio_id(TEST_NAME)
-            .user_id(TEST_ID)
-            .num_offices(TEST_NUM_OFFICES)
+            .regionId(TEST_NAME)
+            .portfolioId(TEST_NAME)
+            .userId(TEST_ID)
+            .numOffices(TEST_NUM_OFFICES)
             .name(TEST_NAME)
             .offices(null)
             .build();

@@ -21,21 +21,21 @@ public class Region {
     @Id
     @JsonProperty("region_id")
     @NonNull
-    private String region_id;
+    private String regionId;
 
     @JsonProperty("portfolio_id")
     @NonNull
-    private String portfolio_id;
+    private String portfolioId;
 
     @JsonProperty("user_id")
     @NonNull
-    private List<String> user_id;
+    private List<String> userId;
 
     @JsonProperty("name")
     private String name;
 
     @JsonProperty("num_offices")
-    private int num_offices;
+    private int numOffices;
 
     @JsonProperty("offices")
     private List<Office> offices;
