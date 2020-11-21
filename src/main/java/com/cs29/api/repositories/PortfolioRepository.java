@@ -11,7 +11,5 @@ public interface PortfolioRepository extends MongoRepository<Portfolio, String> 
 
     Optional<List<Portfolio>> findAllByTag(String Tag);
 
-    Optional<List<Portfolio>> findAllByCreatedOn(String createdOn);
-
-    Optional<List<Portfolio>> findAllByCreatedOnAndUserId(String createdOn, String userId);
+    Optional<List<Portfolio>> findAllByUserId(String userId);
 }
