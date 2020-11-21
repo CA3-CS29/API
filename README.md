@@ -25,7 +25,7 @@ This may require the VPN.
 To contribute to the repo create a feature branch based on the feature that you are implementing using:
 
 ```shell
-git checkout -b example-feature
+git checkout -b feature/#issuenumber-example-feature
 ```
 
 After pushing to the repo, open a merge request and make sure the pipeline passes. All merge requests are subject to code review.

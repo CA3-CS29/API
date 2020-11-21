@@ -11,5 +11,4 @@ public interface RegionRepository extends MongoRepository<Region, String> {
 
     Optional<List<Region>> findAllByUserId(String userId);
 
-    Optional<List<Region>> findAllByRegionId(String regionId);
 }
