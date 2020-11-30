@@ -5,6 +5,7 @@ import com.cs29.api.dtos.PortfolioDto;
 import com.cs29.api.dtos.Response;
 import com.cs29.api.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.NoSuchElementException;
-
 
 @RestController
 @RequestMapping("/account")
@@ -27,6 +27,7 @@ public class AccountController {
     }
 
     @GetMapping(value = "/getAccount/{accountId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getAccount(@PathVariable("accountId") String accountId) {
         ApiApplication.logger.info("AccountController received get request with accountId " + accountId);
         try {
@@ -37,6 +38,7 @@ public class AccountController {
     }
 
     @PostMapping(value = "/createAccount/{accountId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response createAccount(@PathVariable("accountId") String accountId) {
         ApiApplication.logger.info("AccountController received create request with accountId " + accountId);
         try {
