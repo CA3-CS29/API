@@ -10,7 +10,7 @@ test:
   stage: test
   image: gradle:jdk11
   tags:
-    - gcp
+    - openstack
   only:
     - merge_requests
   script:
@@ -22,7 +22,7 @@ build:
   stage: build
   image: gradle:jdk11
   tags:
-    - gcp
+    - openstack
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
   script:
@@ -39,7 +39,7 @@ deploy:
   stage: deploy
   image: gradle:jdk11
   tags:
-    - gcp
+    - openstack
   services:
     - docker:dind
   variables:
