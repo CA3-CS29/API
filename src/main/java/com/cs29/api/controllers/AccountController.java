@@ -33,7 +33,9 @@ public class AccountController {
         try {
             return Response.ok().setPayload(accountService.getAccount(accountId));
         } catch (IllegalArgumentException errorMessage) {
-            return Response.duplicateEntity();
+            return Response.duplicateEntity().setErrors(errorMessage);
+        } catch (NoSuchElementException errorMessage) {
+            return Response.exception().setErrors(errorMessage);
         }
     }
 
@@ -45,6 +47,8 @@ public class AccountController {
             accountService.createAccount(accountId);
         } catch (IllegalArgumentException errorMessage) {
             return Response.duplicateEntity();
+        } catch (NoSuchElementException errorMessage) {
+            return Response.exception().setErrors(errorMessage);
         }
         return Response.ok();
     }
