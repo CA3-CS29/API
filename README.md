@@ -1,5 +1,9 @@
 # CS29 CA3 API
 
+[![pipeline status](https://stgit.dcs.gla.ac.uk/tp3-2020-CS29/api/badges/master/pipeline.svg)](https://stgit.dcs.gla.ac.uk/tp3-2020-CS29/api/-/commits/master)
+
+[![coverage report](https://stgit.dcs.gla.ac.uk/tp3-2020-CS29/api/badges/master/coverage.svg)](https://stgit.dcs.gla.ac.uk/tp3-2020-CS29/api/-/commits/master)
+
 This repository contains files for the CA3 client-side application's API. The API is automatically deployed to <https://ca3-api.herokuapp.com/>. Keep in mind that the API uses a free tier of Heroku Dynos, so the first requests may have to cold boot and will take a bit longer to boot.
 
 ## Tests
