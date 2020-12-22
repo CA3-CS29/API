@@ -2,7 +2,10 @@ plugins {
     id 'org.springframework.boot' version '2.3.4.RELEASE'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
+    id 'jacoco'
 }
+
+apply plugin: 'jacoco'
 
 group = 'com.cs29'
 version = '1'
@@ -43,6 +46,26 @@ dependencies {
     }
 }
 
+jacoco {
+    toolVersion = "0.8.5"
+}
+
+jacocoTestReport {
+    reports {
+        csv.enabled true
+        csv.destination file("build/jacocoCsv")
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['**/config/**'
+                    ]
+            )
+        }))
+    }
+}
+
 test {
     useJUnitPlatform()
+    finalizedBy("jacocoTestReport")
 }

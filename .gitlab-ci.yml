@@ -1,5 +1,6 @@
 variables:
   APP_NAME: ca3-api
+  JACOCO_CSV_LOCATION: '$CI_PROJECT_DIR/build/jacocoCsv'
 
 stages:
   - test
@@ -15,7 +16,8 @@ test:
     - merge_requests
   script:
     - echo "Testing Backend... 🏓"
-    - ./gradlew test build
+    - ./gradlew check
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, " instructions covered"; print 100*covered/instructions, "% covered" }' $JACOCO_CSV_LOCATION
     - echo "Backend Tests Complete! 🎉"
 
 build:
