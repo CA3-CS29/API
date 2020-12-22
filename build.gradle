@@ -22,6 +22,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     // Mongodb
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.1.RELEASE'
     // Lombok
     implementation 'org.projectlombok:lombok:1.18.12'
     compileOnly 'org.projectlombok:lombok:1.18.12'
@@ -32,6 +36,7 @@ dependencies {
 
     // Test lombok annotations
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
