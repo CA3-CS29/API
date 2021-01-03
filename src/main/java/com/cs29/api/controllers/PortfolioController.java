@@ -67,7 +67,7 @@ public class PortfolioController {
     }
 
     @GetMapping(value = "/getAllByTag/{tag}")
-    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/portfolios", "http://localhost:3000/portfolios"})
     public Response getAllByTag(@PathVariable("tag") String tag) {
         try {
             return Response.ok().setPayload(portfolioService.getAllByTag(tag));
@@ -79,7 +79,7 @@ public class PortfolioController {
 
 
     @GetMapping(value = "/getAllByUserId/{userId}")
-    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/portfolios", "http://localhost:3000/portfolios"})
     public Response getAllByUserId(@PathVariable("userId") String tag) {
         try {
             return Response.ok().setPayload(portfolioService.getAllByUserId(tag));
