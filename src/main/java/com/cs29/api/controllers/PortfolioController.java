@@ -18,6 +18,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/portfolio")
+@CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
 public class PortfolioController {
 
     private final PortfolioService portfolioService;
