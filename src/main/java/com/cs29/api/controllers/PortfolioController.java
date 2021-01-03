@@ -27,7 +27,7 @@ public class PortfolioController {
     }
 
     @GetMapping(value = "/getPortfolio/{tag}/{userId}")
-    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
     public Response getPortfolio(@PathVariable("tag") String tag,
                               @PathVariable("userId") String userId) {
         try {
@@ -38,7 +38,7 @@ public class PortfolioController {
     }
 
     @PostMapping(value = "/createPortfolio/{userId}")
-    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
     public Response createPortfolio(@PathVariable("userId") String userId,
                                  @RequestBody PortfolioDto portfolioDto){
         try {
@@ -54,7 +54,7 @@ public class PortfolioController {
     }
 
     @PostMapping(value = "/updatePortfolio/{accountId}")
-    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
     public Response updatePortfolio(@PathVariable("accountId") String accountId,
                                     @RequestBody PortfolioDto portfolioDto) {
         try {
@@ -67,7 +67,7 @@ public class PortfolioController {
     }
 
     @GetMapping(value = "/getAllByTag/{tag}")
-    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/portfolios", "http://localhost:3000/portfolios"})
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
     public Response getAllByTag(@PathVariable("tag") String tag) {
         try {
             return Response.ok().setPayload(portfolioService.getAllByTag(tag));
@@ -79,7 +79,7 @@ public class PortfolioController {
 
 
     @GetMapping(value = "/getAllByUserId/{userId}")
-    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/portfolios", "http://localhost:3000/portfolios"})
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
     public Response getAllByUserId(@PathVariable("userId") String tag) {
         try {
             return Response.ok().setPayload(portfolioService.getAllByUserId(tag));
