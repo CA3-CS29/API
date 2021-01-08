@@ -17,6 +17,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/account")
+@CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
 public class AccountController {
 
     private final AccountService accountService;
@@ -54,6 +55,7 @@ public class AccountController {
     }
 
     @PostMapping(value = "/addPortfolio/{accountId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response addPortfolio(@PathVariable("accountId") String accountId,
                                  @RequestBody PortfolioDto portfolioDto) {
         ApiApplication.logger.info("AccountController received create request for portfolio with accountId "
@@ -67,6 +69,7 @@ public class AccountController {
     }
 
     @PostMapping(value = "/updatePortfolio/{accountId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response updatePortfolio(@PathVariable("accountId") String accountId,
                                     @RequestBody PortfolioDto portfolioDto) {
         ApiApplication.logger.info("AccountController received update request for portfolio with accountId "

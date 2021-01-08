@@ -5,6 +5,7 @@ import com.cs29.api.dtos.Response;
 import com.cs29.api.services.OfficeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/office")
+@CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
 public class OfficeController {
 
     private final OfficeService officeService;
@@ -26,6 +28,7 @@ public class OfficeController {
     }
 
     @GetMapping(value = "/getOffice/{name}/{userId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getOffice(@PathVariable("name") String name,
                              @PathVariable("userId") String userId) {
         try {
@@ -37,6 +40,7 @@ public class OfficeController {
     }
 
     @GetMapping(value = "/getAllUsersOffices/{userId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getAllUsersOffices(@PathVariable("userId") String userId) {
         try {
             return Response.ok().setPayload(officeService.getAllUsersOffices(userId));
@@ -48,6 +52,7 @@ public class OfficeController {
     }
 
     @PostMapping(value = "/createOffice/{regionId}/{portfolioId}/{accountId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response createOffice(@PathVariable("regionId") String regionId,
                                 @PathVariable("portfolioId") String portfolioId,
                                 @PathVariable("accountId") String accountId,

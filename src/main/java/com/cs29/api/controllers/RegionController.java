@@ -5,6 +5,7 @@ import com.cs29.api.dtos.Response;
 import com.cs29.api.services.RegionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/region")
+@CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
 public class RegionController {
 
     private final RegionService regionService;
@@ -27,6 +29,7 @@ public class RegionController {
     }
 
     @GetMapping(value = "/getRegion/{name}/{userId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getRegion(@PathVariable("name") String name,
                              @PathVariable("userId") String userId) {
         try {
@@ -38,6 +41,7 @@ public class RegionController {
     }
 
     @GetMapping(value = "/getAllRegionsForUser/{userId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getAllRegionsForUser(@PathVariable("userId") String userId) {
         try {
             return Response.ok().setPayload(regionService.getAllRegionsForUser(userId));
@@ -48,6 +52,7 @@ public class RegionController {
 
 
     @PostMapping(value = "/createRegion/{accountId}/{portfolioId}/{userId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response createRegion(@PathVariable("accountId") String accountId,
                                 @PathVariable("portfolioId") String portfolioId,
                                 @RequestBody RegionDto regionDto,

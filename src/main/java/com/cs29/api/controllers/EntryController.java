@@ -5,6 +5,7 @@ import com.cs29.api.dtos.Response;
 import com.cs29.api.services.EntryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/entry")
+@CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
 public class EntryController {
 
     private final EntryService entryService;
@@ -27,6 +29,7 @@ public class EntryController {
     }
 
     @GetMapping(value = "/getEntry/{tag}/{officeId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getEntry(@PathVariable("tag") String tag,
                              @PathVariable("officeId") String officeId) {
         try {
@@ -38,6 +41,7 @@ public class EntryController {
     }
 
     @GetMapping(value = "/getEntriesFromOffice/{officeId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getEntriesFromOffice(@PathVariable("officeId") String officeId) {
         try {
             return Response.ok().setPayload(entryService.getEntriesFromOffice(officeId));
@@ -47,6 +51,7 @@ public class EntryController {
     }
 
     @GetMapping(value = "/getAllBySource/{source}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getAllBySource(@PathVariable("source") String source) {
         try {
             return Response.ok().setPayload(entryService.getAllBySource(source));
@@ -58,6 +63,7 @@ public class EntryController {
     }
 
     @PostMapping(value = "/createEntry/{accountId}/{portfolioId}/{regionId}/{officeId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response createEntry(@PathVariable("accountId") String accountId,
                                 @PathVariable("portfolioId") String portfolioId,
                                 @PathVariable("regionId") String regionId,
