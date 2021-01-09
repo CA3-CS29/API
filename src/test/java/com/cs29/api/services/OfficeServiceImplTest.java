@@ -138,15 +138,15 @@ public class OfficeServiceImplTest {
     public void createOfficeSucceedsWhenAccountPortfolioRegionExist() {
         OfficeService officeService = new OfficeServiceImpl(
                 TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO, TEST_OFFICE_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
         when(TEST_OFFICE_REPO.findAllByUserId(
                 TEST_ID)).thenReturn(Optional.of(List.of(TEST_OFFICE)));
         officeService.createOffice(TEST_ID, TEST_ID, TEST_ID, OfficeMapper.toOfficeDto(TEST_OFFICE));
-        verify(TEST_REGION_REPO).findDistinctByNameAndUserId(TEST_NAME, TEST_ID);
+        verify(TEST_REGION_REPO).findDistinctByNameAndUserIdAndPortfolioId(TEST_NAME, TEST_ID, TEST_ID);
         verify(TEST_PORTFOLIO_REPO).findDistinctByTagAndUserId(TEST_NAME, TEST_ID);
         verify(TEST_ACCOUNT_REPO).findDistinctByUserId(TEST_ID);
         verify(TEST_OFFICE_REPO).save(TEST_OFFICE);
@@ -156,8 +156,8 @@ public class OfficeServiceImplTest {
     public void createOfficeThrowsWhenAccountDoesNotExist() {
         OfficeService officeService = new OfficeServiceImpl(
                 TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO, TEST_OFFICE_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.empty());
@@ -172,8 +172,8 @@ public class OfficeServiceImplTest {
     public void createOfficeThrowsWhenPortfolioDoesNotExist() {
         OfficeService officeService = new OfficeServiceImpl(
                 TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO, TEST_OFFICE_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
@@ -187,8 +187,8 @@ public class OfficeServiceImplTest {
     public void createOfficeThrowsWhenRegionDoesNotExist() {
         OfficeService officeService = new OfficeServiceImpl(
                 TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO, TEST_OFFICE_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.empty());
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));

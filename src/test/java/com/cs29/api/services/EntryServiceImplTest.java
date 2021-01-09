@@ -201,8 +201,8 @@ public class EntryServiceImplTest {
                 TEST_PORTFOLIO_REPO,
                 TEST_OFFICE_REPO,
                 TEST_ENTRY_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
@@ -210,7 +210,7 @@ public class EntryServiceImplTest {
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
         when(TEST_ENTRY_REPO.findByTagAndOfficeId(TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
         entryService.createEntry(TEST_ID, TEST_ID, TEST_ID, TEST_ID, EntryMapper.toEntryDto(TEST_ENTRY));
-        verify(TEST_REGION_REPO).findDistinctByNameAndUserId(TEST_NAME, TEST_ID);
+        verify(TEST_REGION_REPO).findDistinctByNameAndUserIdAndPortfolioId(TEST_NAME, TEST_ID, TEST_ID);
         verify(TEST_PORTFOLIO_REPO).findDistinctByTagAndUserId(TEST_NAME, TEST_ID);
         verify(TEST_ACCOUNT_REPO).findDistinctByUserId(TEST_ID);
         verify(TEST_OFFICE_REPO).findDistinctByNameAndUserId(TEST_NAME, TEST_ID);
@@ -224,8 +224,8 @@ public class EntryServiceImplTest {
                 TEST_PORTFOLIO_REPO,
                 TEST_OFFICE_REPO,
                 TEST_ENTRY_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.empty());
@@ -243,8 +243,8 @@ public class EntryServiceImplTest {
                 TEST_PORTFOLIO_REPO,
                 TEST_OFFICE_REPO,
                 TEST_ENTRY_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
@@ -262,8 +262,8 @@ public class EntryServiceImplTest {
                 TEST_PORTFOLIO_REPO,
                 TEST_OFFICE_REPO,
                 TEST_ENTRY_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.empty());
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
@@ -281,8 +281,8 @@ public class EntryServiceImplTest {
                 TEST_PORTFOLIO_REPO,
                 TEST_OFFICE_REPO,
                 TEST_ENTRY_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
@@ -300,8 +300,8 @@ public class EntryServiceImplTest {
                 TEST_PORTFOLIO_REPO,
                 TEST_OFFICE_REPO,
                 TEST_ENTRY_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));

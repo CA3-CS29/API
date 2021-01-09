@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RegionRepository extends MongoRepository<Region, String> {
-    Optional<Region> findDistinctByNameAndUserId(String name, String userId);
+    Optional<Region> findDistinctByNameAndUserIdAndPortfolioId(String name, String userId, String portfolioId);
 
     Optional<List<Region>> findAllByUserId(String userId);
 

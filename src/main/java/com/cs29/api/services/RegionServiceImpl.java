@@ -34,8 +34,8 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public RegionDto getRegion(String name, String userId) {
-        Optional<Region> regionOptional = getRegionFromRepository(name, userId);
+    public RegionDto getRegion(String name, String userId, String portfolioId) {
+        Optional<Region> regionOptional = getRegionFromRepository(name, userId, portfolioId);
         if (regionOptional.isEmpty()) {
             String errorMessage = String.format(
                     "RegionService could not find region %s", name);
@@ -63,7 +63,7 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public void createRegion(String accountId, String portfolioId, RegionDto regionDto, String userId) {
-        Optional<Region> regionOptional = getRegionFromRepository(regionDto.getName(), userId);
+        Optional<Region> regionOptional = getRegionFromRepository(regionDto.getName(), userId, regionDto.getPortfolioId());
         if (regionOptional.isPresent()) {
             String errorMessage = String.format(
                     "RegionService could not create region %s as it already exists", regionDto.getName());
@@ -112,8 +112,8 @@ public class RegionServiceImpl implements RegionService {
         ApiApplication.logger.info("RegionService added new region: " + regionDto.getName());
     }
 
-    private Optional<Region> getRegionFromRepository(String name, String userId) {
-        return regionRepository.findDistinctByNameAndUserId(name, userId);
+    private Optional<Region> getRegionFromRepository(String name, String userId, String portfolioId) {
+        return regionRepository.findDistinctByNameAndUserIdAndPortfolioId(name, userId, portfolioId);
     }
 
     private Optional<List<Region>> getAllRegionsFromRepository(String userId) {

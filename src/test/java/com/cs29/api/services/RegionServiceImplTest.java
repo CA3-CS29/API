@@ -80,19 +80,19 @@ public class RegionServiceImplTest {
     @Test
     public void getRegionSucceedsWhenRegionExists() {
         RegionService regionService = new RegionServiceImpl(TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
-        RegionDto regionDto = regionService.getRegion(TEST_NAME, TEST_ID);
-        verify(TEST_REGION_REPO).findDistinctByNameAndUserId(TEST_NAME, TEST_ID);
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
+        RegionDto regionDto = regionService.getRegion(TEST_NAME, TEST_ID, TEST_ID);
+        verify(TEST_REGION_REPO).findDistinctByNameAndUserIdAndPortfolioId(TEST_NAME, TEST_ID, TEST_ID);
         assertEquals(regionDto, RegionMapper.toRegionDto(TEST_REGION));
     }
 
     @Test
     public void getRegionThrowsWhenRegionDoesNotExist() {
         RegionService regionService = new RegionServiceImpl(TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
-        assertThrows(NoSuchElementException.class, () -> regionService.getRegion(TEST_NAME, TEST_ID));
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.empty());
+        assertThrows(NoSuchElementException.class, () -> regionService.getRegion(TEST_NAME, TEST_ID, TEST_ID));
     }
 
     @Test
@@ -116,14 +116,14 @@ public class RegionServiceImplTest {
     @Test
     public void createRegionSucceedsWhenAccountPortfolioExist() {
         RegionService regionService = new RegionServiceImpl(TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.empty());
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
 
         regionService.createRegion(TEST_ID, TEST_ID, RegionMapper.toRegionDto(TEST_REGION), TEST_ID);
-        verify(TEST_REGION_REPO).findDistinctByNameAndUserId(TEST_NAME, TEST_ID);
+        verify(TEST_REGION_REPO).findDistinctByNameAndUserIdAndPortfolioId(TEST_NAME, TEST_ID, TEST_ID);
         verify(TEST_PORTFOLIO_REPO).findDistinctByTagAndUserId(TEST_NAME, TEST_ID);
         verify(TEST_ACCOUNT_REPO).findDistinctByUserId(TEST_ID);
         verify(TEST_REGION_REPO).save(TEST_REGION);
@@ -132,8 +132,8 @@ public class RegionServiceImplTest {
     @Test
     public void createRegionThrowsWhenAccountDoesNotExist() {
         RegionService regionService = new RegionServiceImpl(TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.empty());
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.empty());
@@ -146,8 +146,8 @@ public class RegionServiceImplTest {
     @Test
     public void createRegionThrowsWhenPortfolioDoesNotExist() {
         RegionService regionService = new RegionServiceImpl(TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.empty());
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
@@ -159,8 +159,8 @@ public class RegionServiceImplTest {
     @Test
     public void createRegionThrowsWhenPortfolioAlreadyExists() {
         RegionService regionService = new RegionServiceImpl(TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO);
-        when(TEST_REGION_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
+        when(TEST_REGION_REPO.findDistinctByNameAndUserIdAndPortfolioId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_REGION));
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
