@@ -113,10 +113,10 @@ public class OfficeServiceImpl implements OfficeService {
 
         List<Region> regions = portfolio.get().getRegions();
         Region associatedRegion = null;
-        for (Region region : regions) {
-            if (region.getRegionId().equals(regionId)) {
-                associatedRegion = region;
-            }
+            for (Region region : regions) {
+                if (region.getRegionId().equals(regionId)) {
+                    associatedRegion = region;
+                }
         }
         if (associatedRegion == null) {
             String errorMessage = String.format(
@@ -124,7 +124,7 @@ public class OfficeServiceImpl implements OfficeService {
             ApiApplication.logger.error(errorMessage);
             throw new NoSuchElementException(errorMessage);
         }
-        Optional<Region> optionalRegion = getRegionFromRepository(associatedRegion.getName(), accountId);
+        Optional<Region> optionalRegion = getRegionFromRepository(associatedRegion.getName(), accountId, associatedPortfolio.getPortfolioId());
         if (optionalRegion.isEmpty()) {
             String errorMessage = String.format(
                     "OfficeService could not create office %s as region does not exist", regionId);
@@ -154,8 +154,8 @@ public class OfficeServiceImpl implements OfficeService {
         return officeRepository.findAllByUserId(userId);
     }
 
-    private Optional<Region> getRegionFromRepository(String name, String userId) {
-        return regionRepository.findDistinctByNameAndUserId(name, userId);
+    private Optional<Region> getRegionFromRepository(String name, String userId, String portfolioId) {
+        return regionRepository.findDistinctByNameAndUserIdAndPortfolioId(name, userId, portfolioId);
     }
 
     private Optional<Account> getAccountFromRepository(String userId) {

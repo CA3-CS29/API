@@ -149,7 +149,7 @@ public class EntryServiceImpl implements EntryService {
             ApiApplication.logger.error(errorMessage);
             throw new NoSuchElementException(errorMessage);
         }
-        Optional<Region> optionalRegion = getRegionFromRepository(associatedRegion.getName(), accountId);
+        Optional<Region> optionalRegion = getRegionFromRepository(associatedRegion.getName(), accountId, associatedPortfolio.getPortfolioId());
         if (optionalRegion.isEmpty()) {
             String errorMessage = String.format(
                     "EntryService could not create entry %s as region does not exist", entryDto.getTag());
@@ -209,8 +209,8 @@ public class EntryServiceImpl implements EntryService {
         return officeRepository.findDistinctByNameAndUserId(name, userId);
     }
 
-    private Optional<Region> getRegionFromRepository(String name, String userId) {
-        return regionRepository.findDistinctByNameAndUserId(name, userId);
+    private Optional<Region> getRegionFromRepository(String name, String userId, String portfolioId) {
+        return regionRepository.findDistinctByNameAndUserIdAndPortfolioId(name, userId, portfolioId);
     }
 
     private Optional<Account> getAccountFromRepository(String userId) {

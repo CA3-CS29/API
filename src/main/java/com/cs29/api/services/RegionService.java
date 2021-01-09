@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RegionService {
 
-    RegionDto getRegion(String name, String userId);
+    RegionDto getRegion(String name, String userId, String portfolioId);
 
     List<RegionDto> getAllRegionsForUser(String userId);
 

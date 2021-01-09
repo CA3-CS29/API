@@ -28,12 +28,13 @@ public class RegionController {
         this.regionService = accountService;
     }
 
-    @GetMapping(value = "/getRegion/{name}/{userId}")
+    @GetMapping(value = "/getRegion/{name}/{userId}/{portfolioId}")
     @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getRegion(@PathVariable("name") String name,
-                             @PathVariable("userId") String userId) {
+                             @PathVariable("userId") String userId,
+                                @PathVariable("portfolioId") String portfolioId) {
         try {
-            return Response.ok().setPayload(regionService.getRegion(name, userId));
+            return Response.ok().setPayload(regionService.getRegion(name, userId, portfolioId));
         }
         catch (NoSuchElementException errorMessage) {
             return Response.exception();
