@@ -109,6 +109,19 @@ public class AccountServiceImpl implements AccountService {
         portfolioRepository.save(PortfolioModelMapper.toPortfolioModel(portfolioDto));
     }
 
+    @Override
+    public void deleteAccount(String accountId) {
+        Optional<Account> account = getAccountFromRepository(accountId);
+        if (account.isEmpty()) {
+            String errorMessage = String.format(
+                    "AccountService could not retrieve account with account id: %s", accountId);
+            ApiApplication.logger.error(errorMessage);
+            throw new NoSuchElementException(errorMessage);
+        }
+        ApiApplication.logger.info("AccountService deleted user with account id: " + accountId);
+        accountRepository.deleteById(accountId);
+    }
+
     private Optional<Account> getAccountFromRepository(String accountId) {
         return accountRepository.findDistinctByUserId(accountId);
     }

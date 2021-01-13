@@ -11,4 +11,6 @@ public interface AccountService {
     void addPortfolio(String accountId, PortfolioDto portfolioDto);
 
     void updatePortfolio(String accountId, PortfolioDto portfolioDto);
+
+    void deleteAccount(String accountId);
 }

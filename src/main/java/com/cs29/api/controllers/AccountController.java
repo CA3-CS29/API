@@ -82,4 +82,15 @@ public class AccountController {
         return Response.ok();
     }
 
+    @PostMapping(value = "/delete/{accountId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
+    public Response deleteAccount(@PathVariable("accountId") String accountId) {
+        ApiApplication.logger.info("AccountController received delete request for accountId " + accountId);
+        try {
+            accountService.deleteAccount(accountId);
+        } catch (NoSuchElementException errorMessage) {
+            return Response.exception();
+        }
+        return Response.ok();
+    }
 }
