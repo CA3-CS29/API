@@ -13,6 +13,7 @@ import com.cs29.api.repositories.OfficeRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import com.cs29.api.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class OfficeServiceImpl implements OfficeService {
 
 
     @Override
+    @Cacheable(value = "officeCache", key = "#name")
     public OfficeDto getOffice(String name, String userId) {
         Optional<Office> optionalOffice = getOfficeFromRepository(name, userId);
         if (optionalOffice.isEmpty()) {
@@ -53,6 +55,7 @@ public class OfficeServiceImpl implements OfficeService {
     }
 
     @Override
+    @Cacheable(value = "usersOfficesCache", key = "#userId")
     public List<OfficeDto> getAllUsersOffices(String userId) {
         var optionalOffices = getOfficesFromRepoForUser(userId);
         if (optionalOffices.isEmpty()) {

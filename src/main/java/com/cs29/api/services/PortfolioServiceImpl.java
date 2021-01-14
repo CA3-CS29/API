@@ -9,6 +9,7 @@ import com.cs29.api.models.PortfolioModelMapper;
 import com.cs29.api.repositories.AccountRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     @Override
+    @Cacheable(value = "portfolioCache", key = "#tag")
     public PortfolioDto getPortfolio(String tag, String userId) {
         Optional<Portfolio> portfolio = getPortfolioFromRepository(userId, tag);
         if (portfolio.isEmpty()) {
@@ -85,6 +87,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     @Override
+    @Cacheable(value = "portfoliosByTagCache", key = "#tag")
     public List<PortfolioDto> getAllByTag(String tag) {
         Optional<List<Portfolio>> portfolios = getAllPortfoliosForTag(tag);
         if (portfolios.isEmpty()) {
@@ -104,6 +107,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 
 
     @Override
+    @Cacheable(value = "portfoliosByUserId", key = "#userId")
     public List<PortfolioDto> getAllByUserId(String userId) {
         Optional<List<Portfolio>> portfolios = getAllPortfoliosForAccount(userId);
         if (portfolios.isEmpty()) {
