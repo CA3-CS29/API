@@ -15,6 +15,7 @@ import com.cs29.api.repositories.OfficeRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import com.cs29.api.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    @Cacheable(value = "entryCache", key = "#tag")
     public EntryDto getEntry(String tag, String officeId) {
         Optional<Entry> optionalEntry = getEntryFromRepository(tag, officeId);
         if (optionalEntry.isEmpty()) {
@@ -57,6 +59,7 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    @Cacheable(value = "entriesFromOfficeCache", key = "#officeId")
     public List<EntryDto> getEntriesFromOffice(String officeId) {
         var entriesOptionalList = getEntriesFromRepoByOfficeId(officeId);
         if (entriesOptionalList.isEmpty()) {
@@ -76,6 +79,7 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    @Cacheable(value = "entriesBySource", key = "#source")
     public List<EntryDto> getAllBySource(String source) {
         var entriesOptionalList = getEntriesFromRepoBySource(source);
         if (entriesOptionalList.isEmpty()) {

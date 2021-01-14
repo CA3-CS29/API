@@ -11,6 +11,7 @@ import com.cs29.api.models.PortfolioModelMapper;
 import com.cs29.api.repositories.AccountRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Cacheable(value = "accountCache", key = "#accountId")
     public AccountDto getAccount(String accountId) {
         Optional<Account> account = getAccountFromRepository(accountId);
         if (account.isEmpty()) {
