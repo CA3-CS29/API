@@ -116,10 +116,10 @@ public class OfficeServiceImpl implements OfficeService {
 
         List<Region> regions = portfolio.get().getRegions();
         Region associatedRegion = null;
-            for (Region region : regions) {
-                if (region.getRegionId().equals(regionId)) {
-                    associatedRegion = region;
-                }
+        for (Region region : regions) {
+            if (region.getRegionId().equals(regionId)) {
+                associatedRegion = region;
+            }
         }
         if (associatedRegion == null) {
             String errorMessage = String.format(
@@ -136,9 +136,12 @@ public class OfficeServiceImpl implements OfficeService {
         }
 
         Office newOffice = OfficeModelMapper.toOfficeModel(officeDto);
-        optionalRegion.get().getOffices().add(newOffice);
-        portfolio.get().getRegions().add(optionalRegion.get());
-        accountOptional.get().getPortfolios().add(portfolio.get());
+        optionalRegion.get().getOffices().set(optionalRegion.get().getOffices().indexOf(newOffice),
+                newOffice);
+        portfolio.get().getRegions().set(portfolio.get().getRegions().indexOf(optionalRegion.get()),
+                optionalRegion.get());
+        accountOptional.get().getPortfolios().set(accountOptional.get().getPortfolios().indexOf(portfolio.get()),
+                portfolio.get());
 
         officeRepository.save(newOffice);
         regionRepository.save(optionalRegion.get());
