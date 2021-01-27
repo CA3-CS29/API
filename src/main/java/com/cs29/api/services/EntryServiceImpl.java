@@ -184,9 +184,12 @@ public class EntryServiceImpl implements EntryService {
 
         Entry newEntry = EntryModelMapper.toEntryModel(entryDto);
         optionalOffice.get().getEntries().add(newEntry);
-        optionalRegion.get().getOffices().add(optionalOffice.get());
-        portfolio.get().getRegions().add(optionalRegion.get());
-        accountOptional.get().getPortfolios().add(portfolio.get());
+        optionalRegion.get().getOffices().set(optionalRegion.get().getOffices().indexOf(
+                optionalOffice.get()), optionalOffice.get());
+        portfolio.get().getRegions().set(portfolio.get().getRegions().indexOf(
+                optionalRegion.get()), optionalRegion.get());
+        accountOptional.get().getPortfolios().set(
+                accountOptional.get().getPortfolios().indexOf(portfolio.get()), portfolio.get());
 
         entryRepository.save(newEntry);
         officeRepository.save(optionalOffice.get());

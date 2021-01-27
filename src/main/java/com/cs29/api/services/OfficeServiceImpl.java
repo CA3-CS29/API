@@ -136,8 +136,7 @@ public class OfficeServiceImpl implements OfficeService {
         }
 
         Office newOffice = OfficeModelMapper.toOfficeModel(officeDto);
-        optionalRegion.get().getOffices().set(optionalRegion.get().getOffices().indexOf(newOffice),
-                newOffice);
+        optionalRegion.get().getOffices().add(newOffice);
         portfolio.get().getRegions().set(portfolio.get().getRegions().indexOf(optionalRegion.get()),
                 optionalRegion.get());
         accountOptional.get().getPortfolios().set(accountOptional.get().getPortfolios().indexOf(portfolio.get()),
