@@ -35,7 +35,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    @Cacheable (value = "regionCache", key = "#name ")
+    @Cacheable(value = "regionCache", key = "#name ")
     public RegionDto getRegion(String name, String userId, String portfolioId) {
         Optional<Region> regionOptional = getRegionFromRepository(name, userId, portfolioId);
         if (regionOptional.isEmpty()) {
@@ -48,7 +48,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    @Cacheable (value = "allRegionsForUserCache", key = "#userId")
+    @Cacheable(value = "allRegionsForUserCache", key = "#userId")
     public List<RegionDto> getAllRegionsForUser(String userId) {
         var regionsOptional = getAllRegionsFromRepository(userId);
         if (regionsOptional.isEmpty()) {
@@ -107,7 +107,7 @@ public class RegionServiceImpl implements RegionService {
 
         Region newRegion = RegionModelMapper.toRegionModel(regionDto);
         portfolio.get().getRegions().add(newRegion);
-        account.get().getPortfolios().add(portfolio.get());
+        account.get().getPortfolios().set(account.get().getPortfolios().indexOf(portfolio.get()), portfolio.get());
         regionRepository.save(newRegion);
         portfolioRepository.save(portfolio.get());
         accountRepository.save(account.get());
