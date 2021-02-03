@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -105,9 +106,15 @@ public class RegionServiceImpl implements RegionService {
             throw new NoSuchElementException(errorMessage);
         }
 
+        var memIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < account.get().getPortfolios().size(); i++) {
+            memIndex.put(account.get().getPortfolios().get(i).getPortfolioId(), i);
+        }
+
         Region newRegion = RegionModelMapper.toRegionModel(regionDto);
         portfolio.get().getRegions().add(newRegion);
-        account.get().getPortfolios().set(account.get().getPortfolios().indexOf(portfolio.get()), portfolio.get());
+        var index = memIndex.get(portfolio.get().getPortfolioId());
+        account.get().getPortfolios().set(index, portfolio.get());
         regionRepository.save(newRegion);
         portfolioRepository.save(portfolio.get());
         accountRepository.save(account.get());
