@@ -17,6 +17,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -135,12 +136,21 @@ public class OfficeServiceImpl implements OfficeService {
             throw new NoSuchElementException(errorMessage);
         }
 
+        var memRegionIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < portfolio.get().getRegions().size(); i++) {
+            memRegionIndex.put(portfolio.get().getRegions().get(i).getRegionId(), i);
+        }
+        var regionIndex = memRegionIndex.get(optionalRegion.get().getRegionId());
+
+        var memPortIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < accountOptional.get().getPortfolios().size(); i++) {
+            memPortIndex.put(accountOptional.get().getPortfolios().get(i).getPortfolioId(), i);
+        }
+        var portIndex = memPortIndex.get(portfolio.get().getPortfolioId());
         Office newOffice = OfficeModelMapper.toOfficeModel(officeDto);
         optionalRegion.get().getOffices().add(newOffice);
-        portfolio.get().getRegions().set(portfolio.get().getRegions().indexOf(optionalRegion.get()),
-                optionalRegion.get());
-        accountOptional.get().getPortfolios().set(accountOptional.get().getPortfolios().indexOf(portfolio.get()),
-                portfolio.get());
+        portfolio.get().getRegions().set(regionIndex, optionalRegion.get());
+        accountOptional.get().getPortfolios().set(portIndex, portfolio.get());
 
         officeRepository.save(newOffice);
         regionRepository.save(optionalRegion.get());

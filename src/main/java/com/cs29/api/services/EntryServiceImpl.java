@@ -182,6 +182,7 @@ public class EntryServiceImpl implements EntryService {
             throw new NoSuchElementException(errorMessage);
         }
 
+        // TODO: use hashmap to index in memory as in other service implementations @Jack
         Entry newEntry = EntryModelMapper.toEntryModel(entryDto);
         optionalOffice.get().getEntries().add(newEntry);
         optionalRegion.get().getOffices().set(optionalRegion.get().getOffices().indexOf(
