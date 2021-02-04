@@ -27,7 +27,7 @@ public class PortfolioDto {
 
     @JsonProperty("user_id")
     @NonNull
-    private List<String> userId;
+    private String userId;
 
     @JsonProperty("tag")
     private String tag;

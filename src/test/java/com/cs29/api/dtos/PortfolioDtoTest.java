@@ -4,15 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PortfolioDtoTest {
 
     private final ObjectMapper MAPPER = new ObjectMapper();
-    private final List<String> TEST_ID = Arrays.asList("TEST_ID1", "TEST_ID2");
+    private final String TEST_ID = "TEST_ID1";
     private final String TEST_NAME = "TEST_NAME";
     private final int TEST_NUM_REGIONS = 0;
     private final String TEST_DATE = "10/10/2020";
@@ -26,9 +23,8 @@ public class PortfolioDtoTest {
             .createdOn(TEST_DATE)
             .updatedOn(TEST_DATE)
             .build();
-    private final String TEST_SERIALIZED_PORTFOLIO_DTO = "{\"portfolio_id\":\"TEST_NAME\",\"user_id\":[\"TEST_ID1\",\"TEST_ID2\"]," +
-            "\"tag\":\"TEST_NAME\",\"num_regions\":0,\"created_on\":\"10/10/2020\"," +
-            "\"updated_on\":\"10/10/2020\"}";
+    private final String TEST_SERIALIZED_PORTFOLIO_DTO = "{\"portfolio_id\":\"TEST_NAME\",\"user_id\":\"TEST_ID1\"" +
+            ",\"tag\":\"TEST_NAME\",\"num_regions\":0,\"created_on\":\"10/10/2020\",\"updated_on\":\"10/10/2020\"}";
 
     @SneakyThrows
     @Test

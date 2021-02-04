@@ -31,7 +31,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class OfficeServiceImplTest {
     private final String TEST_ID = "test_id";
-    private final List<String> TEST_ID_LIST = List.of(TEST_ID);
     private final int TEST_NUM = 1;
     private final String TEST_DATE = "10/10/2020";
     private final String TEST_NAME = "TEST_NAME";
@@ -40,14 +39,14 @@ public class OfficeServiceImplTest {
             .builder()
             .officeId(TEST_ID)
             .regionId(TEST_ID)
-            .userId(TEST_ID_LIST)
+            .userId(TEST_ID)
             .name(TEST_NAME)
             .numEntries(TEST_NUM_ENTRIES)
             .entries(null)
             .build();
     private final Portfolio TEST_PORTFOLIO = Portfolio.builder()
             .portfolioId(TEST_ID)
-            .userId(new ArrayList<>())
+            .userId(TEST_ID)
             .tag(TEST_NAME)
             .regions(new ArrayList<>())
             .numRegions(TEST_NUM)
@@ -63,7 +62,7 @@ public class OfficeServiceImplTest {
             .builder()
             .regionId(TEST_ID)
             .portfolioId(TEST_ID)
-            .userId(TEST_ID_LIST)
+            .userId(TEST_ID)
             .numOffices(TEST_NUM)
             .name(TEST_NAME)
             .offices(new ArrayList<>())
@@ -80,7 +79,6 @@ public class OfficeServiceImplTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        TEST_PORTFOLIO.getUserId().add(TEST_ID);
         TEST_ACCOUNT.getPortfolios().add(TEST_PORTFOLIO);
         TEST_PORTFOLIO.getRegions().add(TEST_REGION);
         TEST_REGION.getOffices().add(TEST_OFFICE);
@@ -88,7 +86,6 @@ public class OfficeServiceImplTest {
 
     @AfterEach
     public void teardown() {
-        TEST_PORTFOLIO.getUserId().clear();
         TEST_ACCOUNT.getPortfolios().clear();
         TEST_REGION.getOffices().clear();
     }

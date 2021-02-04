@@ -31,7 +31,7 @@ public class RegionDto {
 
     @JsonProperty("user_id")
     @NonNull
-    private List<String> userId;
+    private String userId;
 
     @JsonProperty("name")
     private String name;

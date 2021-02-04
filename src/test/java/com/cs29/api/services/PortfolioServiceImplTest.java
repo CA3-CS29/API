@@ -33,7 +33,7 @@ public class PortfolioServiceImplTest {
     private final String TEST_NAME = "TEST_NAME";
     private final Portfolio TEST_PORTFOLIO = Portfolio.builder()
             .portfolioId(TEST_ID)
-            .userId(new ArrayList<>())
+            .userId(TEST_ID)
             .tag(TEST_NAME)
             .regions(null)
             .numRegions(TEST_NUM)
@@ -53,13 +53,11 @@ public class PortfolioServiceImplTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        TEST_PORTFOLIO.getUserId().add(TEST_ID);
         TEST_ACCOUNT.getPortfolios().add(TEST_PORTFOLIO);
     }
 
     @AfterEach
     public void teardown() {
-        TEST_PORTFOLIO.getUserId().clear();
         TEST_ACCOUNT.getPortfolios().clear();
     }
 
