@@ -20,8 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
@@ -39,14 +37,13 @@ public class AccountControllerTest {
             .numPortfolios(TEST_NUM)
             .portfolios(new ArrayList<>())
             .build();
-    private final List<String> TEST_ID_LIST = Arrays.asList("TEST_ID1", "TEST_ID2");
     private final String TEST_NAME = "TEST_NAME";
     private final int TEST_NUM_REGIONS = 0;
     private final String TEST_DATE = "10/10/2020";
     private final PortfolioDto TEST_PORTFOLIO_DTO = PortfolioDto
             .builder()
             .portfolioId(TEST_NAME)
-            .userId(TEST_ID_LIST)
+            .userId(TEST_ID)
             .tag(TEST_NAME)
             .regions(null)
             .numRegions(TEST_NUM_REGIONS)

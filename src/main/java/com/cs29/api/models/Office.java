@@ -24,7 +24,7 @@ public class Office {
 
     @JsonProperty("user_id")
     @NonNull
-    private List<String> userId;
+    private String userId;
 
     @JsonProperty("region_id")
     @NonNull

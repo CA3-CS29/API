@@ -3,13 +3,10 @@ package com.cs29.api.dtos;
 import com.cs29.api.models.Portfolio;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PortfolioMapperTest {
-    private final List<String> TEST_ID = Arrays.asList("TEST_ID1", "TEST_ID2");
+    private final String TEST_ID = "TEST_ID1";
     private final String TEST_NAME = "TEST_NAME";
     private final int TEST_NUM_REGIONS = 0;
     private final String TEST_DATE = "10/10/2020";

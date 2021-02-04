@@ -29,13 +29,12 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RegionServiceImplTest {
     private final String TEST_ID = "test_id";
-    private final List<String> TEST_ID_LIST = List.of(TEST_ID);
     private final int TEST_NUM = 1;
     private final String TEST_DATE = "10/10/2020";
     private final String TEST_NAME = "TEST_NAME";
     private final Portfolio TEST_PORTFOLIO = Portfolio.builder()
             .portfolioId(TEST_ID)
-            .userId(new ArrayList<>())
+            .userId(TEST_ID)
             .tag(TEST_NAME)
             .regions(new ArrayList<>())
             .numRegions(TEST_NUM)
@@ -51,7 +50,7 @@ public class RegionServiceImplTest {
             .builder()
             .regionId(TEST_ID)
             .portfolioId(TEST_ID)
-            .userId(TEST_ID_LIST)
+            .userId(TEST_ID)
             .numOffices(TEST_NUM)
             .name(TEST_NAME)
             .offices(null)
@@ -66,14 +65,12 @@ public class RegionServiceImplTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        TEST_PORTFOLIO.getUserId().add(TEST_ID);
         TEST_ACCOUNT.getPortfolios().add(TEST_PORTFOLIO);
         TEST_PORTFOLIO.getRegions().add(TEST_REGION);
     }
 
     @AfterEach
     public void teardown() {
-        TEST_PORTFOLIO.getUserId().clear();
         TEST_ACCOUNT.getPortfolios().clear();
     }
 
