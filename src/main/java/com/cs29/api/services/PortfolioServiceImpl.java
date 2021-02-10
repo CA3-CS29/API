@@ -64,6 +64,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         portfolioRepository.save(newPortfolio);
         Account associatedAccount = account.get();
         associatedAccount.getPortfolios().add(newPortfolio);
+        associatedAccount.setNumPortfolios(associatedAccount.getNumPortfolios() + 1);
         accountRepository.save(associatedAccount);
         ApiApplication.logger.info(
                 "PortfolioService created new portfolio for account " + userId + "with tag" + portfolioDto.getTag());

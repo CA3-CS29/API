@@ -114,10 +114,12 @@ public class RegionServiceImpl implements RegionService {
         Region newRegion = RegionModelMapper.toRegionModel(regionDto);
         portfolio.get().getRegions().add(newRegion);
         var index = memIndex.get(portfolio.get().getPortfolioId());
+        portfolio.get().setNumRegions(portfolio.get().getNumRegions() + 1);
         account.get().getPortfolios().set(index, portfolio.get());
         regionRepository.save(newRegion);
         portfolioRepository.save(portfolio.get());
         accountRepository.save(account.get());
+
 
         ApiApplication.logger.info("RegionService added new region: " + regionDto.getName());
     }
