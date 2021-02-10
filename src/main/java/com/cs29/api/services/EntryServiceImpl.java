@@ -19,6 +19,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -182,23 +183,36 @@ public class EntryServiceImpl implements EntryService {
             throw new NoSuchElementException(errorMessage);
         }
 
-        // TODO: use hashmap to index in memory as in other service implementations @Jack
+        var memRegionIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < portfolio.get().getRegions().size(); i++) {
+            memRegionIndex.put(portfolio.get().getRegions().get(i).getRegionId(), i);
+        }
+        var regionIndex = memRegionIndex.get(optionalRegion.get().getRegionId());
+
+        var memPortIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < accountOptional.get().getPortfolios().size(); i++) {
+            memPortIndex.put(accountOptional.get().getPortfolios().get(i).getPortfolioId(), i);
+        }
+        var portIndex = memPortIndex.get(portfolio.get().getPortfolioId());
+
+        var memOfficeIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < accountOptional.get().getPortfolios().size(); i++) {
+            memOfficeIndex.put(optionalRegion.get().getOffices().get(i).getOfficeId(), i);
+        }
+
+        var officeIndex = memOfficeIndex.get(optionalOffice.get().getOfficeId());
         Entry newEntry = EntryModelMapper.toEntryModel(entryDto);
         optionalOffice.get().getEntries().add(newEntry);
-        optionalRegion.get().getOffices().set(optionalRegion.get().getOffices().indexOf(
-                optionalOffice.get()), optionalOffice.get());
-        portfolio.get().getRegions().set(portfolio.get().getRegions().indexOf(
-                optionalRegion.get()), optionalRegion.get());
-        accountOptional.get().getPortfolios().set(
-                accountOptional.get().getPortfolios().indexOf(portfolio.get()), portfolio.get());
+        optionalRegion.get().getOffices().set(officeIndex, optionalOffice.get());
         optionalOffice.get().setNumEntries(optionalOffice.get().getNumEntries() + 1);
+        portfolio.get().getRegions().set(regionIndex, optionalRegion.get());
+        accountOptional.get().getPortfolios().set(portIndex, portfolio.get());
 
         entryRepository.save(newEntry);
         officeRepository.save(optionalOffice.get());
         regionRepository.save(optionalRegion.get());
         portfolioRepository.save(portfolio.get());
         accountRepository.save(accountOptional.get());
-
         ApiApplication.logger.info("EntryService added new entry: " + entryDto.getTag());
     }
 
