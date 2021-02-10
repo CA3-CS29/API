@@ -149,6 +149,7 @@ public class OfficeServiceImpl implements OfficeService {
         var portIndex = memPortIndex.get(portfolio.get().getPortfolioId());
         Office newOffice = OfficeModelMapper.toOfficeModel(officeDto);
         optionalRegion.get().getOffices().add(newOffice);
+        optionalRegion.get().setNumOffices(optionalRegion.get().getNumOffices() + 1);
         portfolio.get().getRegions().set(regionIndex, optionalRegion.get());
         accountOptional.get().getPortfolios().set(portIndex, portfolio.get());
 

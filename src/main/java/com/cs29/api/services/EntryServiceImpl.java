@@ -191,6 +191,7 @@ public class EntryServiceImpl implements EntryService {
                 optionalRegion.get()), optionalRegion.get());
         accountOptional.get().getPortfolios().set(
                 accountOptional.get().getPortfolios().indexOf(portfolio.get()), portfolio.get());
+        optionalOffice.get().setNumEntries(optionalOffice.get().getNumEntries() + 1);
 
         entryRepository.save(newEntry);
         officeRepository.save(optionalOffice.get());
