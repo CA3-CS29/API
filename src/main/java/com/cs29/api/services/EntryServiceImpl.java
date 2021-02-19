@@ -196,13 +196,18 @@ public class EntryServiceImpl implements EntryService {
         var portIndex = memPortIndex.get(portfolio.get().getPortfolioId());
 
         var memOfficeIndex = new HashMap<String, Integer>();
-        for (int i = 0; i < accountOptional.get().getPortfolios().size(); i++) {
+        for (int i = 0; i < optionalRegion.get().getOffices().size(); i++) {
             memOfficeIndex.put(optionalRegion.get().getOffices().get(i).getOfficeId(), i);
         }
 
         var officeIndex = memOfficeIndex.get(optionalOffice.get().getOfficeId());
         Entry newEntry = EntryModelMapper.toEntryModel(entryDto);
-        optionalOffice.get().getEntries().add(newEntry);
+        try {
+            optionalOffice.get().getEntries().add(newEntry);
+        } catch (Exception e) {
+            optionalOffice.get().setEntries(new ArrayList<>());
+            optionalOffice.get().getEntries().add(newEntry);
+        }
         optionalRegion.get().getOffices().set(officeIndex, optionalOffice.get());
         optionalOffice.get().setNumEntries(optionalOffice.get().getNumEntries() + 1);
         portfolio.get().getRegions().set(regionIndex, optionalRegion.get());
