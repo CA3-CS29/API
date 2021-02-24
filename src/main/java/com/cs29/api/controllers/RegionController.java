@@ -77,7 +77,7 @@ public class RegionController {
             regionService.deleteRegion(regionId, portfolioId, portTag, userId);
             return Response.ok();
         } catch (NoSuchElementException e) {
-            return Response.exception().setErrors(e);
+            return Response.exception();
         }
     }
 }
