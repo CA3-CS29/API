@@ -124,6 +124,43 @@ public class RegionServiceImpl implements RegionService {
         ApiApplication.logger.info("RegionService added new region: " + regionDto.getName());
     }
 
+    @Override
+    public void deleteRegion(String regionId, String portfolioId, String portfolioTag, String userId) {
+        Optional<Account> account = getAccountFromRepository(userId);
+        if (account.isEmpty()) {
+            String errorMessage = String.format(
+                    "RegionService could not retrieve account with account id: %s", userId);
+            ApiApplication.logger.error(errorMessage);
+            throw new NoSuchElementException(errorMessage);
+        }
+
+        Optional<Portfolio> portfolio = getPortfolioFromRepository(portfolioTag, portfolioId);
+
+        if (portfolio.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+
+        var memPortIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < account.get().getPortfolios().size(); i++) {
+            memPortIndex.put(account.get().getPortfolios().get(i).getPortfolioId(), i);
+        }
+        int portIndex = memPortIndex.get(portfolioId);
+
+
+        var memRegionIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < portfolio.get().getRegions().size(); i++) {
+            memRegionIndex.put(portfolio.get().getRegions().get(i).getRegionId(), i);
+        }
+        int regionIndex = memRegionIndex.get(regionId);
+        portfolio.get().getRegions().remove(regionIndex);
+        account.get().getPortfolios().set(portIndex, portfolio.get());
+
+        accountRepository.save(account.get());
+        portfolioRepository.save(portfolio.get());
+        regionRepository.deleteById(regionId);
+        ApiApplication.logger.info("OfficeService deleted office with office id: " + portfolioId);
+    }
+
     private Optional<Region> getRegionFromRepository(String name, String userId, String portfolioId) {
         return regionRepository.findDistinctByNameAndUserIdAndPortfolioId(name, userId, portfolioId);
     }

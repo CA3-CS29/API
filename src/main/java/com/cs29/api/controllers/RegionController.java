@@ -3,9 +3,9 @@ package com.cs29.api.controllers;
 import com.cs29.api.dtos.RegionDto;
 import com.cs29.api.dtos.Response;
 import com.cs29.api.services.RegionService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,12 +31,11 @@ public class RegionController {
     @GetMapping(value = "/getRegion/{name}/{userId}/{portfolioId}")
     @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getRegion(@PathVariable("name") String name,
-                             @PathVariable("userId") String userId,
-                                @PathVariable("portfolioId") String portfolioId) {
+                              @PathVariable("userId") String userId,
+                              @PathVariable("portfolioId") String portfolioId) {
         try {
             return Response.ok().setPayload(regionService.getRegion(name, userId, portfolioId));
-        }
-        catch (NoSuchElementException errorMessage) {
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
     }
@@ -55,19 +54,31 @@ public class RegionController {
     @PostMapping(value = "/createRegion/{accountId}/{portfolioId}/{userId}")
     @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response createRegion(@PathVariable("accountId") String accountId,
-                                @PathVariable("portfolioId") String portfolioId,
-                                @RequestBody RegionDto regionDto,
-                                @PathVariable("userId") String userId){
+                                 @PathVariable("portfolioId") String portfolioId,
+                                 @RequestBody RegionDto regionDto,
+                                 @PathVariable("userId") String userId) {
         try {
             regionService.createRegion(accountId, portfolioId, regionDto, userId);
-        }
-        catch (IllegalArgumentException errorMessage) {
+        } catch (IllegalArgumentException errorMessage) {
             return Response.duplicateEntity();
-        }
-        catch (NoSuchElementException errorMessage) {
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
         return Response.ok();
+    }
+
+    @DeleteMapping(value = "/delete/{regionId}/{portfolioId}/{portfolioTag}/{userId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
+    public Response deleteRegion(@PathVariable("portfolioId") String portfolioId,
+                                 @PathVariable("regionId") String regionId,
+                                 @PathVariable("portfolioTag") String portTag,
+                                 @PathVariable("userId") String userId) {
+        try {
+            regionService.deleteRegion(regionId, portfolioId, portTag, userId);
+            return Response.ok();
+        } catch (NoSuchElementException e) {
+            return Response.exception().setErrors(e);
+        }
     }
 }
 

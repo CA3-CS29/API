@@ -221,6 +221,76 @@ public class EntryServiceImpl implements EntryService {
         ApiApplication.logger.info("EntryService added new entry: " + entryDto.getTag());
     }
 
+    @Override
+    public void deleteEntry(String entryId,
+                            String officeId, String officeTag,
+                            String regionId, String regionName,
+                            String portfolioId, String portfolioTag,
+                            String userId) {
+        Optional<Account> account = getAccountFromRepository(userId);
+        if (account.isEmpty()) {
+            String errorMessage = String.format(
+                    "EntryService could not retrieve account with account id: %s", userId);
+            ApiApplication.logger.error(errorMessage);
+            throw new NoSuchElementException(errorMessage);
+        }
+
+        Optional<Portfolio> portfolio = getPortfolioFromRepository(portfolioTag, portfolioId);
+
+        if (portfolio.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+
+        Optional<Region> optionalRegion = getRegionFromRepository(regionName, userId, portfolioId);
+        if (optionalRegion.isEmpty()) {
+            String errorMessage = String.format(
+                    "EntryService could not delete entry %s as region does not exist", regionId);
+            ApiApplication.logger.error(errorMessage);
+            throw new NoSuchElementException(errorMessage);
+        }
+
+        var memPortIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < account.get().getPortfolios().size(); i++) {
+            memPortIndex.put(account.get().getPortfolios().get(i).getPortfolioId(), i);
+        }
+        int portIndex = memPortIndex.get(portfolioId);
+
+        var memOfficeIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < optionalRegion.get().getOffices().size(); i++) {
+            memOfficeIndex.put(optionalRegion.get().getOffices().get(i).getOfficeId(), i);
+        }
+
+        int officeIndex = memOfficeIndex.get(officeId);
+
+        var memRegionIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < portfolio.get().getRegions().size(); i++) {
+            memRegionIndex.put(portfolio.get().getRegions().get(i).getRegionId(), i);
+        }
+        var regionIndex = memRegionIndex.get(optionalRegion.get().getRegionId());
+
+        var entryOfficeIndex = new HashMap<String, Integer>();
+        Optional<Office> office = getOfficeFromRepository(officeTag, userId);
+        if (office.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        for (int i = 0; i < office.get().getEntries().size(); i++) {
+            entryOfficeIndex.put(office.get().getEntries().get(i).getOfficeId(), i);
+        }
+        int entryIndex = entryOfficeIndex.get(entryId);
+
+        office.get().getEntries().remove(entryIndex);
+        optionalRegion.get().getOffices().set(officeIndex, office.get());
+        portfolio.get().getRegions().set(regionIndex, optionalRegion.get());
+        account.get().getPortfolios().set(portIndex, portfolio.get());
+
+        accountRepository.save(account.get());
+        regionRepository.save(optionalRegion.get());
+        portfolioRepository.save(portfolio.get());
+        officeRepository.save(office.get());
+        entryRepository.deleteById(entryId);
+        ApiApplication.logger.info("EntryService deleted entry with entry id: " + entryId);
+    }
+
     private Optional<Entry> getEntryFromRepository(String tag, String officeId) {
         return entryRepository.findByTagAndOfficeId(tag, officeId);
     }

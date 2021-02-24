@@ -162,6 +162,61 @@ public class OfficeServiceImpl implements OfficeService {
 
     }
 
+    @Override
+    public void deleteOffice(String officeId, String portfolioId,
+                             String portfolioTag, String regionId, String regionName, String userId) {
+        Optional<Account> account = getAccountFromRepository(userId);
+        if (account.isEmpty()) {
+            String errorMessage = String.format(
+                    "OfficeService could not retrieve account with account id: %s", userId);
+            ApiApplication.logger.error(errorMessage);
+            throw new NoSuchElementException(errorMessage);
+        }
+
+        Optional<Portfolio> portfolio = getPortfolioFromRepository(portfolioTag, portfolioId);
+
+        if (portfolio.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+
+        Optional<Region> optionalRegion = getRegionFromRepository(regionName, userId, portfolioId);
+        if (optionalRegion.isEmpty()) {
+            String errorMessage = String.format(
+                    "OfficeService could not delete office %s as region does not exist", regionId);
+            ApiApplication.logger.error(errorMessage);
+            throw new NoSuchElementException(errorMessage);
+        }
+
+        var memPortIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < account.get().getPortfolios().size(); i++) {
+            memPortIndex.put(account.get().getPortfolios().get(i).getPortfolioId(), i);
+        }
+        int portIndex = memPortIndex.get(portfolioId);
+
+        var memOfficeIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < optionalRegion.get().getOffices().size(); i++) {
+            memOfficeIndex.put(optionalRegion.get().getOffices().get(i).getOfficeId(), i);
+        }
+
+        int officeIndex = memOfficeIndex.get(officeId);
+
+        var memRegionIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < portfolio.get().getRegions().size(); i++) {
+            memRegionIndex.put(portfolio.get().getRegions().get(i).getRegionId(), i);
+        }
+        var regionIndex = memRegionIndex.get(optionalRegion.get().getRegionId());
+        optionalRegion.get().getOffices().remove(officeIndex);
+        portfolio.get().getRegions().set(regionIndex, optionalRegion.get());
+        account.get().getPortfolios().set(portIndex, portfolio.get());
+
+        accountRepository.save(account.get());
+        regionRepository.save(optionalRegion.get());
+        portfolioRepository.save(portfolio.get());
+        officeRepository.deleteById(officeId);
+        ApiApplication.logger.info("OfficeService deleted office with office id: " + officeId);
+
+    }
+
     private Optional<Office> getOfficeFromRepository(String name, String userId) {
         return officeRepository.findDistinctByNameAndUserId(name, userId);
     }

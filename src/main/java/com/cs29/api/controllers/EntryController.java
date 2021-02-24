@@ -3,9 +3,9 @@ package com.cs29.api.controllers;
 import com.cs29.api.dtos.EntryDto;
 import com.cs29.api.dtos.Response;
 import com.cs29.api.services.EntryService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,8 +34,7 @@ public class EntryController {
                              @PathVariable("officeId") String officeId) {
         try {
             return Response.ok().setPayload(entryService.getEntry(tag, officeId));
-        }
-        catch (NoSuchElementException errorMessage) {
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
     }
@@ -55,8 +54,7 @@ public class EntryController {
     public Response getAllBySource(@PathVariable("source") String source) {
         try {
             return Response.ok().setPayload(entryService.getAllBySource(source));
-        }
-        catch (NoSuchElementException errorMessage) {
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
 
@@ -68,13 +66,30 @@ public class EntryController {
                                 @PathVariable("portfolioId") String portfolioId,
                                 @PathVariable("regionId") String regionId,
                                 @PathVariable("officeId") String officeId,
-                                @RequestBody EntryDto entryDto){
+                                @RequestBody EntryDto entryDto) {
         try {
             entryService.createEntry(accountId, portfolioId, regionId, officeId, entryDto);
-        }
-        catch (NoSuchElementException errorMessage) {
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
         return Response.ok();
+    }
+
+    @DeleteMapping(value = "/delete/{entryId}/{officeId}/{officeTag}/{regionId}/{regionName}/{portfolioId}/{portfolioTag}/{userId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
+    public Response deleteEntry(@PathVariable("portfolioId") String portfolioId,
+                                @PathVariable("regionId") String regionId,
+                                @PathVariable("regionName") String regionName,
+                                @PathVariable("portfolioTag") String portTag,
+                                @PathVariable("userId") String userId,
+                                @PathVariable("officeId") String officeId,
+                                @PathVariable("officeTag") String officeTag,
+                                @PathVariable("entryId") String entryId) {
+        try {
+            entryService.deleteEntry(entryId, officeId, officeTag, regionId, regionName, portfolioId, portTag, userId);
+            return Response.ok();
+        } catch (NoSuchElementException e) {
+            return Response.exception().setErrors(e);
+        }
     }
 }

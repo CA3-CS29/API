@@ -13,4 +13,8 @@ public interface EntryService {
 
     void createEntry(String accountId, String portfolioId, String regionId, String officeId, EntryDto entryDto);
 
+    void deleteEntry(String entryId, String officeId, String officeTag,
+                     String regionId, String regionName,
+                     String portfolioId, String portfolioTag,
+                     String userId);
 }

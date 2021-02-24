@@ -12,4 +12,6 @@ public interface RegionService {
 
     void createRegion(String accountId, String portfolioId, RegionDto regionDto, String userId);
 
+    void deleteRegion(String regionId, String portfolioId, String portfolioTag, String userId);
+
 }
