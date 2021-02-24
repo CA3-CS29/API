@@ -3,10 +3,10 @@ package com.cs29.api.controllers;
 import com.cs29.api.dtos.PortfolioDto;
 import com.cs29.api.dtos.Response;
 import com.cs29.api.services.PortfolioService;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,13 +24,14 @@ public class PortfolioController {
     private final PortfolioService portfolioService;
 
     @Autowired
-    public PortfolioController(PortfolioService portfolioService) { this.portfolioService = portfolioService;
+    public PortfolioController(PortfolioService portfolioService) {
+        this.portfolioService = portfolioService;
     }
 
     @GetMapping(value = "/getPortfolio/{tag}/{userId}")
     @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
     public Response getPortfolio(@PathVariable("tag") String tag,
-                              @PathVariable("userId") String userId) {
+                                 @PathVariable("userId") String userId) {
         try {
             return Response.ok().setPayload(portfolioService.getPortfolio(tag, userId));
         } catch (NoSuchElementException errorMessage) {
@@ -41,14 +42,12 @@ public class PortfolioController {
     @PostMapping(value = "/createPortfolio/{userId}")
     @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com", "http://localhost:3000"})
     public Response createPortfolio(@PathVariable("userId") String userId,
-                                 @RequestBody PortfolioDto portfolioDto){
+                                    @RequestBody PortfolioDto portfolioDto) {
         try {
             portfolioService.createPortfolio(userId, portfolioDto);
-        }
-        catch (IllegalArgumentException errorMessage) {
+        } catch (IllegalArgumentException errorMessage) {
             return Response.duplicateEntity();
-        }
-        catch(NoSuchElementException errorMessage){
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
         return Response.ok();
@@ -60,8 +59,7 @@ public class PortfolioController {
                                     @RequestBody PortfolioDto portfolioDto) {
         try {
             portfolioService.updatePortfolio(accountId, portfolioDto);
-        }
-        catch (NoSuchElementException errorMessage){
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
         return Response.ok();
@@ -72,8 +70,7 @@ public class PortfolioController {
     public Response getAllByTag(@PathVariable("tag") String tag) {
         try {
             return Response.ok().setPayload(portfolioService.getAllByTag(tag));
-        }
-        catch (NoSuchElementException errorMessage) {
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
     }
@@ -84,12 +81,20 @@ public class PortfolioController {
     public Response getAllByUserId(@PathVariable("userId") String tag) {
         try {
             return Response.ok().setPayload(portfolioService.getAllByUserId(tag));
-        }
-        catch (NoSuchElementException errorMessage) {
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
     }
 
-
-
+    @DeleteMapping(value = "/delete/{portfolioId}/{userId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
+    public Response deletePortfolio(@PathVariable("portfolioId") String portfolioId,
+                                    @PathVariable("userId") String userId) {
+        try {
+            portfolioService.deleteById(portfolioId, userId);
+            return Response.ok();
+        } catch (NoSuchElementException e) {
+            return Response.exception().setErrors(e);
+        }
+    }
 }

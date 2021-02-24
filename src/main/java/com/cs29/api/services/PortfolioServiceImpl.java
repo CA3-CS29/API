@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -124,6 +125,26 @@ public class PortfolioServiceImpl implements PortfolioService {
         ApiApplication.logger.info(
                 "PortfolioService retrieved all portfolios for user with id " + userId);
         return dtos;
+    }
+
+    @Override
+    public void deleteById(String portfolioId, String userId) {
+        Optional<Account> account = getAccountFromRepository(userId);
+        if (account.isEmpty()) {
+            String errorMessage = String.format(
+                    "PortfolioService could not retrieve account with account id: %s", userId);
+            ApiApplication.logger.error(errorMessage);
+            throw new NoSuchElementException(errorMessage);
+        }
+        var memPortIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < account.get().getPortfolios().size(); i++) {
+            memPortIndex.put(account.get().getPortfolios().get(i).getPortfolioId(), i);
+        }
+        int portIndex = memPortIndex.get(portfolioId);
+        account.get().getPortfolios().remove(portIndex);
+        ApiApplication.logger.info("PortfolioService deleted portfolio with portfolio id: " + portfolioId);
+        accountRepository.save(account.get());
+        portfolioRepository.deleteById(portfolioId);
     }
 
     private Optional<Account> getAccountFromRepository(String accountId) {

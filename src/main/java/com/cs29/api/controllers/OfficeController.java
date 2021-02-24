@@ -3,9 +3,9 @@ package com.cs29.api.controllers;
 import com.cs29.api.dtos.OfficeDto;
 import com.cs29.api.dtos.Response;
 import com.cs29.api.services.OfficeService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,17 +24,17 @@ public class OfficeController {
     private final OfficeService officeService;
 
     @Autowired
-    public OfficeController(OfficeService officeService) { this.officeService = officeService;
+    public OfficeController(OfficeService officeService) {
+        this.officeService = officeService;
     }
 
     @GetMapping(value = "/getOffice/{name}/{userId}")
     @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getOffice(@PathVariable("name") String name,
-                             @PathVariable("userId") String userId) {
+                              @PathVariable("userId") String userId) {
         try {
             return Response.ok().setPayload(officeService.getOffice(name, userId));
-        }
-        catch (NoSuchElementException errorMessage) {
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
     }
@@ -44,8 +44,7 @@ public class OfficeController {
     public Response getAllUsersOffices(@PathVariable("userId") String userId) {
         try {
             return Response.ok().setPayload(officeService.getAllUsersOffices(userId));
-        }
-        catch (NoSuchElementException errorMessage) {
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
 
@@ -54,17 +53,31 @@ public class OfficeController {
     @PostMapping(value = "/createOffice/{regionId}/{portfolioId}/{accountId}")
     @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response createOffice(@PathVariable("regionId") String regionId,
-                                @PathVariable("portfolioId") String portfolioId,
-                                @PathVariable("accountId") String accountId,
-                                @RequestBody OfficeDto officeDto){
+                                 @PathVariable("portfolioId") String portfolioId,
+                                 @PathVariable("accountId") String accountId,
+                                 @RequestBody OfficeDto officeDto) {
         try {
-            officeService.createOffice( regionId, portfolioId,accountId, officeDto);
-        }
-        catch (NoSuchElementException errorMessage) {
+            officeService.createOffice(regionId, portfolioId, accountId, officeDto);
+        } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }
         return Response.ok();
     }
 
+    @DeleteMapping(value = "/delete/{officeId}/{regionId}/{regionName}/{portfolioId}/{portfolioTag}/{userId}")
+    @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
+    public Response deleteOffice(@PathVariable("portfolioId") String portfolioId,
+                                 @PathVariable("regionId") String regionId,
+                                 @PathVariable("regionName") String regionName,
+                                 @PathVariable("portfolioTag") String portTag,
+                                 @PathVariable("userId") String userId,
+                                 @PathVariable("officeId") String officeId) {
+        try {
+            officeService.deleteOffice(officeId, portfolioId, portTag, regionId, regionName, userId);
+            return Response.ok();
+        } catch (NoSuchElementException e) {
+            return Response.exception().setErrors(e);
+        }
+    }
 
 }

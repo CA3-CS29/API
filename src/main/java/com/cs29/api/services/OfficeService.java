@@ -10,4 +10,7 @@ public interface OfficeService {
     List<OfficeDto> getAllUsersOffices(String userId);
 
     void createOffice(String regionId, String portfolioId, String accountId, OfficeDto officeDto);
+
+    void deleteOffice(String officeId, String portfolioId, String portfolioTag, String regionId,
+                      String regionName, String userId);
 }
