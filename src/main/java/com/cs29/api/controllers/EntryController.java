@@ -89,7 +89,7 @@ public class EntryController {
             entryService.deleteEntry(entryId, officeId, officeTag, regionId, regionName, portfolioId, portTag, userId);
             return Response.ok();
         } catch (NoSuchElementException e) {
-            return Response.exception().setErrors(e);
+            return Response.exception();
         }
     }
 }

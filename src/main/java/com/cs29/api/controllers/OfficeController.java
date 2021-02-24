@@ -76,7 +76,7 @@ public class OfficeController {
             officeService.deleteOffice(officeId, portfolioId, portTag, regionId, regionName, userId);
             return Response.ok();
         } catch (NoSuchElementException e) {
-            return Response.exception().setErrors(e);
+            return Response.exception();
         }
     }
 
