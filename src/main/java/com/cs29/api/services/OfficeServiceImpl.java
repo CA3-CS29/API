@@ -43,8 +43,8 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     @Cacheable(value = "officeCache", key = "#name")
-    public OfficeDto getOffice(String name, String userId) {
-        Optional<Office> optionalOffice = getOfficeFromRepository(name, userId);
+    public OfficeDto getOffice(String name, String userId, String regionId) {
+        Optional<Office> optionalOffice = getOfficeFromRepository(name, userId, regionId);
         if (optionalOffice.isEmpty()) {
             String errorMessage = String.format(
                     "OfficeService could not find office %s", name);
@@ -76,7 +76,7 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     public void createOffice(String regionId, String portfolioId, String accountId, OfficeDto officeDto) {
-        Optional<Office> optionalOffice = getOfficeFromRepository(officeDto.getName(), accountId);
+        Optional<Office> optionalOffice = getOfficeFromRepository(officeDto.getName(), accountId, regionId);
         if (optionalOffice.isPresent()) {
             String errorMessage = String.format(
                     "OfficeService could not create office %s as it already exists", officeDto.getName());
@@ -217,8 +217,8 @@ public class OfficeServiceImpl implements OfficeService {
 
     }
 
-    private Optional<Office> getOfficeFromRepository(String name, String userId) {
-        return officeRepository.findDistinctByNameAndUserId(name, userId);
+    private Optional<Office> getOfficeFromRepository(String name, String userId, String regionId) {
+        return officeRepository.findDistinctByNameAndUserIdAndRegionId(name, userId, regionId);
     }
 
     private Optional<List<Office>> getOfficesFromRepoForUser(String userId) {
