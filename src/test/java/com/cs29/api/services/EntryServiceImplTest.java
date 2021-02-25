@@ -203,14 +203,14 @@ public class EntryServiceImplTest {
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
-        when(TEST_OFFICE_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
+        when(TEST_OFFICE_REPO.findDistinctByNameAndUserIdAndRegionId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
         when(TEST_ENTRY_REPO.findByTagAndOfficeId(TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
         entryService.createEntry(TEST_ID, TEST_ID, TEST_ID, TEST_ID, EntryMapper.toEntryDto(TEST_ENTRY));
         verify(TEST_REGION_REPO).findDistinctByNameAndUserIdAndPortfolioId(TEST_NAME, TEST_ID, TEST_ID);
         verify(TEST_PORTFOLIO_REPO).findDistinctByTagAndUserId(TEST_NAME, TEST_ID);
         verify(TEST_ACCOUNT_REPO).findDistinctByUserId(TEST_ID);
-        verify(TEST_OFFICE_REPO).findDistinctByNameAndUserId(TEST_NAME, TEST_ID);
+        verify(TEST_OFFICE_REPO).findDistinctByNameAndUserIdAndRegionId(TEST_NAME, TEST_ID, TEST_ID);
         verify(TEST_ENTRY_REPO).save(TEST_ENTRY);
     }
 
@@ -226,8 +226,8 @@ public class EntryServiceImplTest {
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.empty());
-        when(TEST_OFFICE_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
+        when(TEST_OFFICE_REPO.findDistinctByNameAndUserIdAndRegionId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
         when(TEST_ENTRY_REPO.findByTagAndOfficeId(TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
         assertThrows(NoSuchElementException.class, () ->
                 entryService.createEntry(TEST_ID, TEST_ID, TEST_ID, TEST_ID, EntryMapper.toEntryDto(TEST_ENTRY)));
@@ -245,8 +245,8 @@ public class EntryServiceImplTest {
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
-        when(TEST_OFFICE_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
+        when(TEST_OFFICE_REPO.findDistinctByNameAndUserIdAndRegionId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
         when(TEST_ENTRY_REPO.findByTagAndOfficeId(TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
         assertThrows(NoSuchElementException.class, () ->
                 entryService.createEntry(TEST_ID, TEST_ID, TEST_ID, TEST_ID, EntryMapper.toEntryDto(TEST_ENTRY)));
@@ -264,8 +264,8 @@ public class EntryServiceImplTest {
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
-        when(TEST_OFFICE_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
+        when(TEST_OFFICE_REPO.findDistinctByNameAndUserIdAndRegionId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
         when(TEST_ENTRY_REPO.findByTagAndOfficeId(TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
         assertThrows(NoSuchElementException.class, () ->
                 entryService.createEntry(TEST_ID, TEST_ID, TEST_ID, TEST_ID, EntryMapper.toEntryDto(TEST_ENTRY)));
@@ -283,8 +283,8 @@ public class EntryServiceImplTest {
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
-        when(TEST_OFFICE_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
+        when(TEST_OFFICE_REPO.findDistinctByNameAndUserIdAndRegionId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.empty());
         when(TEST_ENTRY_REPO.findByTagAndOfficeId(TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
         assertThrows(NoSuchElementException.class, () ->
                 entryService.createEntry(TEST_ID, TEST_ID, TEST_ID, TEST_ID, EntryMapper.toEntryDto(TEST_ENTRY)));
@@ -302,8 +302,8 @@ public class EntryServiceImplTest {
         when(TEST_PORTFOLIO_REPO.findDistinctByTagAndUserId(
                 TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_PORTFOLIO));
         when(TEST_ACCOUNT_REPO.findDistinctByUserId(TEST_ID)).thenReturn(Optional.of(TEST_ACCOUNT));
-        when(TEST_OFFICE_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
+        when(TEST_OFFICE_REPO.findDistinctByNameAndUserIdAndRegionId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
         when(TEST_ENTRY_REPO.findByTagAndOfficeId(TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_ENTRY));
         assertThrows(NoSuchElementException.class, () ->
                 entryService.createEntry(TEST_ID, TEST_ID, TEST_ID, TEST_ID, EntryMapper.toEntryDto(TEST_ENTRY)));

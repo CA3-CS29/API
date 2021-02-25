@@ -94,10 +94,10 @@ public class OfficeServiceImplTest {
     public void getOfficeSucceedsWhenExists() {
         OfficeService officeService = new OfficeServiceImpl(
                 TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO, TEST_OFFICE_REPO);
-        when(TEST_OFFICE_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
-        OfficeDto officeDto = officeService.getOffice(TEST_NAME, TEST_ID);
-        verify(TEST_OFFICE_REPO).findDistinctByNameAndUserId(TEST_NAME, TEST_ID);
+        when(TEST_OFFICE_REPO.findDistinctByNameAndUserIdAndRegionId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.of(TEST_OFFICE));
+        OfficeDto officeDto = officeService.getOffice(TEST_NAME, TEST_ID, TEST_ID);
+        verify(TEST_OFFICE_REPO).findDistinctByNameAndUserIdAndRegionId(TEST_NAME, TEST_ID, TEST_ID);
         assertEquals(officeDto, OfficeMapper.toOfficeDto(TEST_OFFICE));
     }
 
@@ -105,9 +105,9 @@ public class OfficeServiceImplTest {
     public void getOfficeThrowsWhenOfficeDoesNotExist() {
         OfficeService officeService = new OfficeServiceImpl(
                 TEST_REGION_REPO, TEST_ACCOUNT_REPO, TEST_PORTFOLIO_REPO, TEST_OFFICE_REPO);
-        when(TEST_OFFICE_REPO.findDistinctByNameAndUserId(
-                TEST_NAME, TEST_ID)).thenReturn(Optional.empty());
-        assertThrows(NoSuchElementException.class, () -> officeService.getOffice(TEST_NAME, TEST_ID));
+        when(TEST_OFFICE_REPO.findDistinctByNameAndUserIdAndRegionId(
+                TEST_NAME, TEST_ID, TEST_ID)).thenReturn(Optional.empty());
+        assertThrows(NoSuchElementException.class, () -> officeService.getOffice(TEST_NAME, TEST_ID, TEST_ID));
     }
 
     @Test

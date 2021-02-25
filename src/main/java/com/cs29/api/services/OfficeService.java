@@ -5,7 +5,7 @@ import com.cs29.api.dtos.OfficeDto;
 import java.util.List;
 
 public interface OfficeService {
-    OfficeDto getOffice(String name, String userId);
+    OfficeDto getOffice(String name, String userId, String regionId);
 
     List<OfficeDto> getAllUsersOffices(String userId);
 

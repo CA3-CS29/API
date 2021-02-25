@@ -175,7 +175,7 @@ public class EntryServiceImpl implements EntryService {
             ApiApplication.logger.error(errorMessage);
             throw new NoSuchElementException(errorMessage);
         }
-        Optional<Office> optionalOffice = getOfficeFromRepository(associatedOffice.getName(), accountId);
+        Optional<Office> optionalOffice = getOfficeFromRepository(associatedOffice.getName(), accountId, regionId);
         if (optionalOffice.isEmpty()) {
             String errorMessage = String.format(
                     "EntryService could not create entry %s as office does not exist", entryDto.getTag());
@@ -269,7 +269,7 @@ public class EntryServiceImpl implements EntryService {
         var regionIndex = memRegionIndex.get(optionalRegion.get().getRegionId());
 
         var entryOfficeIndex = new HashMap<String, Integer>();
-        Optional<Office> office = getOfficeFromRepository(officeTag, userId);
+        Optional<Office> office = getOfficeFromRepository(officeTag, userId, regionId);
         if (office.isEmpty()) {
             throw new NoSuchElementException();
         }
@@ -303,8 +303,8 @@ public class EntryServiceImpl implements EntryService {
         return entryRepository.findAllBySource(source);
     }
 
-    private Optional<Office> getOfficeFromRepository(String name, String userId) {
-        return officeRepository.findDistinctByNameAndUserId(name, userId);
+    private Optional<Office> getOfficeFromRepository(String name, String userId, String regionId) {
+        return officeRepository.findDistinctByNameAndUserIdAndRegionId(name, userId, regionId);
     }
 
     private Optional<Region> getRegionFromRepository(String name, String userId, String portfolioId) {

@@ -28,12 +28,13 @@ public class OfficeController {
         this.officeService = officeService;
     }
 
-    @GetMapping(value = "/getOffice/{name}/{userId}")
+    @GetMapping(value = "/getOffice/{name}/{userId}/{regionId}")
     @CrossOrigin(origins = {"https://ca3-frontend.herokuapp.com/", "http://localhost:3000/"})
     public Response getOffice(@PathVariable("name") String name,
-                              @PathVariable("userId") String userId) {
+                              @PathVariable("userId") String userId,
+                              @PathVariable("regionId") String regionId) {
         try {
-            return Response.ok().setPayload(officeService.getOffice(name, userId));
+            return Response.ok().setPayload(officeService.getOffice(name, userId, regionId));
         } catch (NoSuchElementException errorMessage) {
             return Response.exception();
         }

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OfficeRepository extends MongoRepository<Office, String> {
-    Optional<Office> findDistinctByNameAndUserId(String name, String userId);
+    Optional<Office> findDistinctByNameAndUserIdAndRegionId(String name, String userId, String regionId);
 
     Optional<List<Office>> findAllByUserId(String userId);
 
