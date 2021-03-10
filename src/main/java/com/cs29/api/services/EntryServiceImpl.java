@@ -47,10 +47,6 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
-    //@Cacheable(value = "entryCache", key = "#tag")
-    //@CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId",
-    //        "regionCache", "allRegionsForUserCache", "officeCache", "usersOfficesCache"},
-    //        allEntries = true)
     public EntryDto getEntry(String tag, String officeId) {
         Optional<Entry> optionalEntry = getEntryFromRepository(tag, officeId);
         if (optionalEntry.isEmpty()) {
@@ -63,11 +59,7 @@ public class EntryServiceImpl implements EntryService {
         return EntryMapper.toEntryDto(optionalEntry.get());
     }
 
-    //@Override
-    //@Cacheable(value = "entriesFromOfficeCache", key = "#officeId")
-    //@CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId",
-    //        "regionCache", "allRegionsForUserCache", "officeCache", "usersOfficesCache"},
-    //        allEntries = true)
+    @Override
     public List<EntryDto> getEntriesFromOffice(String officeId) {
         var entriesOptionalList = getEntriesFromRepoByOfficeId(officeId);
         if (entriesOptionalList.isEmpty()) {
@@ -87,10 +79,6 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
-    //@Cacheable(value = "entriesBySource", key = "#source")
-    //@CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId",
-    //       "regionCache", "allRegionsForUserCache", "officeCache", "usersOfficesCache"},
-    //        allEntries = true)
     public List<EntryDto> getAllBySource(String source) {
         var entriesOptionalList = getEntriesFromRepoBySource(source);
         if (entriesOptionalList.isEmpty()) {
