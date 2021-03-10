@@ -37,9 +37,6 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    //@Cacheable(value = "regionCache", key = "#name ")
-    //@CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId"},
-    //        allEntries = true)
     public RegionDto getRegion(String name, String userId, String portfolioId) {
         Optional<Region> regionOptional = getRegionFromRepository(name, userId, portfolioId);
         if (regionOptional.isEmpty()) {
@@ -52,9 +49,6 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    //@Cacheable(value = "allRegionsForUserCache", key = "#userId")
-    //@CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId"},
-    //        allEntries = true)
     public List<RegionDto> getAllRegionsForUser(String userId) {
         var regionsOptional = getAllRegionsFromRepository(userId);
         if (regionsOptional.isEmpty()) {
