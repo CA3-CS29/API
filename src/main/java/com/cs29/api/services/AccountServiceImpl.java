@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Cacheable(value = "accountCache", key = "#accountId")
+    //@Cacheable(value = "accountCache", key = "#accountId")
     public AccountDto getAccount(String accountId) {
         Optional<Account> account = getAccountFromRepository(accountId);
         if (account.isEmpty()) {
