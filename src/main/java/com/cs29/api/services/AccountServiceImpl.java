@@ -11,7 +11,6 @@ import com.cs29.api.models.PortfolioModelMapper;
 import com.cs29.api.repositories.AccountRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 

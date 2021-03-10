@@ -15,7 +15,6 @@ import com.cs29.api.repositories.OfficeRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import com.cs29.api.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -48,9 +47,6 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     @Cacheable(value = "entryCache", key = "#tag")
-    @CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId",
-            "regionCache", "allRegionsForUserCache", "officeCache", "usersOfficesCache"},
-            allEntries = true)
     public EntryDto getEntry(String tag, String officeId) {
         Optional<Entry> optionalEntry = getEntryFromRepository(tag, officeId);
         if (optionalEntry.isEmpty()) {
@@ -65,9 +61,6 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     @Cacheable(value = "entriesFromOfficeCache", key = "#officeId")
-    @CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId",
-            "regionCache", "allRegionsForUserCache", "officeCache", "usersOfficesCache"},
-            allEntries = true)
     public List<EntryDto> getEntriesFromOffice(String officeId) {
         var entriesOptionalList = getEntriesFromRepoByOfficeId(officeId);
         if (entriesOptionalList.isEmpty()) {
@@ -88,9 +81,6 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     @Cacheable(value = "entriesBySource", key = "#source")
-    @CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId",
-            "regionCache", "allRegionsForUserCache", "officeCache", "usersOfficesCache"},
-            allEntries = true)
     public List<EntryDto> getAllBySource(String source) {
         var entriesOptionalList = getEntriesFromRepoBySource(source);
         if (entriesOptionalList.isEmpty()) {
