@@ -11,6 +11,7 @@ import com.cs29.api.repositories.AccountRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import com.cs29.api.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,9 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    @Cacheable(value = "regionCache", key = "#name ")
+    //@Cacheable(value = "regionCache", key = "#name ")
+    //@CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId"},
+    //        allEntries = true)
     public RegionDto getRegion(String name, String userId, String portfolioId) {
         Optional<Region> regionOptional = getRegionFromRepository(name, userId, portfolioId);
         if (regionOptional.isEmpty()) {
@@ -49,7 +52,9 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    @Cacheable(value = "allRegionsForUserCache", key = "#userId")
+    //@Cacheable(value = "allRegionsForUserCache", key = "#userId")
+    //@CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId"},
+    //        allEntries = true)
     public List<RegionDto> getAllRegionsForUser(String userId) {
         var regionsOptional = getAllRegionsFromRepository(userId);
         if (regionsOptional.isEmpty()) {

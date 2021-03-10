@@ -13,6 +13,7 @@ import com.cs29.api.repositories.OfficeRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import com.cs29.api.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,10 @@ public class OfficeServiceImpl implements OfficeService {
 
 
     @Override
-    @Cacheable(value = "officeCache", key = "#name")
+    //@Cacheable(value = "officeCache", key = "#name")
+    //@CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId",
+    //        "regionCache", "allRegionsForUserCache"},
+    //        allEntries = true)
     public OfficeDto getOffice(String name, String userId, String regionId) {
         Optional<Office> optionalOffice = getOfficeFromRepository(name, userId, regionId);
         if (optionalOffice.isEmpty()) {
@@ -56,7 +60,10 @@ public class OfficeServiceImpl implements OfficeService {
     }
 
     @Override
-    @Cacheable(value = "usersOfficesCache", key = "#userId")
+    //@Cacheable(value = "usersOfficesCache", key = "#userId")
+    //@CacheEvict(value = {"accountCache", "portfolioCache", "portfoliosByTagCache", "portfoliosByUserId",
+    //        "regionCache", "allRegionsForUserCache"},
+    //        allEntries = true)
     public List<OfficeDto> getAllUsersOffices(String userId) {
         var optionalOffices = getOfficesFromRepoForUser(userId);
         if (optionalOffices.isEmpty()) {
