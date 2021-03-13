@@ -9,8 +9,6 @@ import com.cs29.api.models.PortfolioModelMapper;
 import com.cs29.api.repositories.AccountRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -140,6 +138,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         }
         int portIndex = memPortIndex.get(portfolioId);
         account.get().getPortfolios().remove(portIndex);
+        account.get().setNumPortfolios(account.get().getNumPortfolios() - 1);
         ApiApplication.logger.info("PortfolioService deleted portfolio with portfolio id: " + portfolioId);
         accountRepository.save(account.get());
         portfolioRepository.deleteById(portfolioId);

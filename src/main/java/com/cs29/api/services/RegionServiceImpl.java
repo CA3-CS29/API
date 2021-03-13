@@ -11,8 +11,6 @@ import com.cs29.api.repositories.AccountRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import com.cs29.api.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -133,7 +131,7 @@ public class RegionServiceImpl implements RegionService {
             throw new NoSuchElementException(errorMessage);
         }
 
-        Optional<Portfolio> portfolio = getPortfolioFromRepository(portfolioTag, portfolioId);
+        Optional<Portfolio> portfolio = getPortfolioFromRepository(portfolioTag, userId);
 
         if (portfolio.isEmpty()) {
             throw new NoSuchElementException();
@@ -152,6 +150,7 @@ public class RegionServiceImpl implements RegionService {
         }
         int regionIndex = memRegionIndex.get(regionId);
         portfolio.get().getRegions().remove(regionIndex);
+        portfolio.get().setNumRegions(portfolio.get().getNumRegions() - 1);
         account.get().getPortfolios().set(portIndex, portfolio.get());
 
         accountRepository.save(account.get());
