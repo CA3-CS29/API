@@ -15,8 +15,6 @@ import com.cs29.api.repositories.OfficeRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import com.cs29.api.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -233,7 +231,7 @@ public class EntryServiceImpl implements EntryService {
             throw new NoSuchElementException(errorMessage);
         }
 
-        Optional<Portfolio> portfolio = getPortfolioFromRepository(portfolioTag, portfolioId);
+        Optional<Portfolio> portfolio = getPortfolioFromRepository(portfolioTag, userId);
 
         if (portfolio.isEmpty()) {
             throw new NoSuchElementException();
@@ -277,6 +275,7 @@ public class EntryServiceImpl implements EntryService {
         int entryIndex = entryOfficeIndex.get(entryId);
 
         office.get().getEntries().remove(entryIndex);
+        office.get().setNumEntries(office.get().getNumEntries() - 1);
         optionalRegion.get().getOffices().set(officeIndex, office.get());
         portfolio.get().getRegions().set(regionIndex, optionalRegion.get());
         account.get().getPortfolios().set(portIndex, portfolio.get());

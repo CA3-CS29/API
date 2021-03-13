@@ -13,8 +13,6 @@ import com.cs29.api.repositories.OfficeRepository;
 import com.cs29.api.repositories.PortfolioRepository;
 import com.cs29.api.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -172,7 +170,7 @@ public class OfficeServiceImpl implements OfficeService {
             throw new NoSuchElementException(errorMessage);
         }
 
-        Optional<Portfolio> portfolio = getPortfolioFromRepository(portfolioTag, portfolioId);
+        Optional<Portfolio> portfolio = getPortfolioFromRepository(portfolioTag, userId);
 
         if (portfolio.isEmpty()) {
             throw new NoSuchElementException();
@@ -205,6 +203,7 @@ public class OfficeServiceImpl implements OfficeService {
         }
         var regionIndex = memRegionIndex.get(optionalRegion.get().getRegionId());
         optionalRegion.get().getOffices().remove(officeIndex);
+        optionalRegion.get().setNumOffices(optionalRegion.get().getNumOffices() - 1);
         portfolio.get().getRegions().set(regionIndex, optionalRegion.get());
         account.get().getPortfolios().set(portIndex, portfolio.get());
 
