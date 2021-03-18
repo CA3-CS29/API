@@ -264,15 +264,15 @@ public class EntryServiceImpl implements EntryService {
         }
         var regionIndex = memRegionIndex.get(optionalRegion.get().getRegionId());
 
-        var entryOfficeIndex = new HashMap<String, Integer>();
+        var entryMemIndex = new HashMap<String, Integer>();
         Optional<Office> office = getOfficeFromRepository(officeTag, userId, regionId);
         if (office.isEmpty()) {
             throw new NoSuchElementException();
         }
         for (int i = 0; i < office.get().getEntries().size(); i++) {
-            entryOfficeIndex.put(office.get().getEntries().get(i).getOfficeId(), i);
+            entryMemIndex.put(office.get().getEntries().get(i).getEntryId(), i);
         }
-        int entryIndex = entryOfficeIndex.get(entryId);
+        int entryIndex = entryMemIndex.get(entryId);
 
         office.get().getEntries().remove(entryIndex);
         office.get().setNumEntries(office.get().getNumEntries() - 1);
